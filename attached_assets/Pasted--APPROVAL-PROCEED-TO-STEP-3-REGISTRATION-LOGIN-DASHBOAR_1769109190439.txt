@@ -1,0 +1,126 @@
+## ✅ APPROVAL: PROCEED TO STEP 3 — REGISTRATION, LOGIN & DASHBOARD
+
+Step 2 is **approved**.
+You are cleared to proceed with **STEP 3**.
+
+---
+
+## 🔹 SCOPE OF STEP 3 (STRICT)
+
+Implement **ONLY** the following:
+
+---
+
+### 1️⃣ USER REGISTRATION
+
+#### `POST /api/referrals/register`
+
+Rules:
+
+* Registration allowed **ONLY after OTP verification**
+* Username:
+
+  * Required
+  * Unique
+  * Lowercase stored (display as entered)
+* Referral code:
+
+  * Auto-generated
+  * **UPPERCASE**
+  * Unique
+  * Immutable after creation
+* Mobile number:
+
+  * Must be verified via OTP
+  * One account per mobile
+* Initial status: `active`
+* Initial balance: `0`
+
+❌ Do NOT issue OTP here
+❌ Do NOT auto-login without validation
+
+---
+
+### 2️⃣ USER LOGIN
+
+#### `POST /api/referrals/login`
+
+Rules:
+
+* Login allowed **ONLY after OTP verification**
+* If user status = `blocked`, deny login
+* Issue JWT (24h)
+* Do NOT expose balance directly from DB
+
+---
+
+### 3️⃣ USER DASHBOARD (JWT PROTECTED)
+
+#### `GET /api/referrals/dashboard`
+
+JWT required.
+
+Response must include:
+
+* username
+* referral_code
+* total_earnings (completed credits)
+* total_withdrawals (completed debits)
+* available_balance = earnings − withdrawals
+* total_referrals (count)
+
+⚠️ Balance must be **calculated dynamically**
+❌ Do NOT trust stored balance column
+
+---
+
+## 🔐 SECURITY RULES
+
+* Apply referralAuth middleware
+* Blocked users:
+
+  * Can view nothing
+  * Can do nothing
+* All referral codes:
+
+  * UPPERCASE only
+  * Case-insensitive on input
+* No sensitive fields in responses
+
+---
+
+## 🧱 ARCHITECTURE RULES (REPEAT)
+
+* Routes: no logic
+* Controllers: input/output only
+* Services: ALL business rules
+* Repositories: SQL only
+* No frontend changes
+* No withdrawal logic yet
+
+---
+
+## ⛔ DO NOT DO IN STEP 3
+
+❌ Withdraw endpoint
+❌ Admin APIs
+❌ Manual balance edits
+❌ Referral payouts
+❌ Step 4 logic
+
+---
+
+## ✅ STEP 3 COMPLETION REQUIREMENTS
+
+Reply ONLY with:
+
+1. APIs implemented
+2. Referral code generation logic
+3. Dashboard balance calculation explanation
+4. Proof that blocked users are fully restricted
+
+Then **STOP** and wait for approval for Step 4.
+
+---
+
+Proceed with **STEP 3** now.

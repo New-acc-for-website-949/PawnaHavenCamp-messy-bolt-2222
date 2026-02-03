@@ -1,0 +1,185 @@
+This error is **100% clear and fixable** 👍
+It is **NOT Paytm**, **NOT checksum**, **NOT gateway** anymore.
+
+---
+
+## ❌ ERROR
+
+```
+This site can’t be reached
+localhost refused to connect
+ERR_CONNECTION_REFUSED
+```
+
+---
+
+## 🧠 WHAT THIS ACTUALLY MEANS
+
+👉 **Browser tried to open `http://localhost:<port>`**
+👉 **But NO server is running/listening on that port**
+
+So the browser says:
+
+> “I tried to connect, but nobody answered.”
+
+---
+
+## 🎯 EXACT ROOT CAUSE (IN YOUR CASE)
+
+After Paytm redirects back, it is redirecting to:
+
+```
+CALLBACK_URL = http://localhost:5000/payment/paytm/callback
+```
+
+BUT:
+
+* Your **Express server is NOT running**
+  OR
+* It is running on a **different port**
+  OR
+* Bolt preview is using a **different exposed port**
+
+---
+
+## ✅ WHAT YOU MUST CHECK (IN ORDER)
+
+---
+
+### ✅ 1️⃣ Is your backend server actually running?
+
+In terminal, run:
+
+```bash
+npm start
+```
+
+OR
+
+```bash
+node server.js
+```
+
+OR
+
+```bash
+npm run dev
+```
+
+You MUST see something like:
+
+```
+Server running on port 5000
+```
+
+If you don’t see this → server is NOT running.
+
+---
+
+### ✅ 2️⃣ Is your server listening on PORT 5000?
+
+Check your backend entry file:
+
+```js
+app.listen(5000, () => {
+  console.log("Server running on port 5000");
+});
+```
+
+If Bolt is using another port (like 3000 or 5173), then:
+
+❌ `localhost:5000` will FAIL
+
+---
+
+### ✅ 3️⃣ FRONTEND vs BACKEND PORT CONFUSION (VERY COMMON)
+
+| Service      | Typical Port |
+| ------------ | ------------ |
+| React (Vite) | 5173         |
+| Express API  | 5000         |
+
+👉 Browser **can open React**
+👉 But callback is hitting **Express**
+
+If Express is not running → `ERR_CONNECTION_REFUSED`
+
+---
+
+### ✅ 4️⃣ CALLBACK_URL MUST MATCH ACTUAL SERVER
+
+If your backend runs on `3000`, then:
+
+```env
+PAYTM_CALLBACK_URL=http://localhost:3000/payment/paytm/callback
+```
+
+If backend runs on `5000`, then:
+
+```env
+PAYTM_CALLBACK_URL=http://localhost:5000/payment/paytm/callback
+```
+
+Mismatch = instant failure.
+
+---
+
+## ⚠️ IMPORTANT PAYTM RULE (READ THIS)
+
+Paytm **redirects the USER’S BROWSER**, not server-to-server.
+
+So:
+
+* Browser must be able to reach CALLBACK_URL
+* Server must be running
+* Route must exist
+
+---
+
+## ✅ QUICK CONFIRMATION TEST (DO THIS NOW)
+
+Open browser and manually visit:
+
+```
+http://localhost:5000/payment/paytm/callback
+```
+
+### Outcomes:
+
+| Result                     | Meaning              |
+| -------------------------- | -------------------- |
+| Page opens / JSON response | ✅ Server OK          |
+| ERR_CONNECTION_REFUSED     | ❌ Server not running |
+| 404                        | ❌ Route missing      |
+
+---
+
+## 🔥 MOST LIKELY FIX (90%)
+
+You need to:
+
+### ✅ Start backend server
+
+```bash
+cd backend
+npm run dev
+```
+
+### ✅ Ensure this route exists
+
+```js
+app.post("/payment/paytm/callback", handler);
+```
+
+### ✅ Ensure port matches CALLBACK_URL
+
+---
+
+## 🟢 AFTER FIX — FLOW WILL WORK
+
+✔ Paytm redirect → browser
+✔ Callback hits Express
+✔ Payment status updates
+✔ Booking moves forward
+
+---

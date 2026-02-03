@@ -1,0 +1,91 @@
+There is a CRITICAL BUG in Owners Dashboard → Prices / Rates tab.
+
+------------------------------------------------
+ACTUAL PROBLEM (VERY CLEAR)
+------------------------------------------------
+- When owner sets:
+    - Weekday price
+    - Weekend price
+    - Special date prices
+- Values appear correctly in UI under "Current Prices"
+- BUT when the page is refreshed:
+    - ALL values are lost
+    - UI shows "Not set" for all prices
+
+This means prices are NOT being restored after reload.
+
+------------------------------------------------
+EXPECTED BEHAVIOR
+------------------------------------------------
+- Prices must persist after refresh
+- Prices must load from backend on page load
+- "Current Prices" must show saved values
+- Prices / Rates tab must always reflect backend data
+
+------------------------------------------------
+ROOT CAUSE TO INVESTIGATE
+------------------------------------------------
+One or more of the following is true:
+- Prices are stored only in React local state
+- Save API is not persisting data correctly
+- Fetch API is not called on component mount
+- API response is not mapped back to UI state
+- useEffect for loading prices is missing or incorrect
+- Backend returns data but frontend ignores it
+
+------------------------------------------------
+MANDATORY FIX STRATEGY
+------------------------------------------------
+
+1️⃣ BACKEND (Source of Truth)
+- Ensure prices are stored permanently in DB:
+    - weekday_price
+    - weekend_price
+    - special_prices[]
+- Ensure GET API returns saved prices correctly
+
+2️⃣ FRONTEND (Rehydration is REQUIRED)
+- On Prices / Rates tab MOUNT:
+    - Call GET prices API
+    - Populate UI state from API response
+- UI must NEVER depend on default values after refresh
+
+3️⃣ SAVE FLOW
+- On Save:
+    - Send FULL price payload (not partial)
+    - After successful save:
+        - Re-fetch prices from backend OR
+        - Update state using API response
+
+------------------------------------------------
+STRICT RULES
+------------------------------------------------
+- Backend DB is the ONLY source of truth
+- React state must always be derived from backend
+- Page refresh must NOT wipe prices
+- "Not set" should appear ONLY if backend has no data
+
+------------------------------------------------
+DEBUGGING REQUIREMENTS
+------------------------------------------------
+- Console log:
+    - Save API request payload
+    - Save API response
+    - Fetch API response on page load
+- Verify that fetched values match DB values
+
+------------------------------------------------
+DO NOT DO
+------------------------------------------------
+- Do NOT store prices only in frontend
+- Do NOT reset state on refresh
+- Do NOT hardcode fallback values
+- Do NOT change pricing logic or calendar logic
+
+------------------------------------------------
+SUCCESS CONDITION
+------------------------------------------------
+- Set prices → Save
+- Refresh page
+- Prices still visible correctly
+- "Current Prices" always accurate

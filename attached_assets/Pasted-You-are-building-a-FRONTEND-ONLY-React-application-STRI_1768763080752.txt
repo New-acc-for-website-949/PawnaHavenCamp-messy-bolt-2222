@@ -1,0 +1,112 @@
+You are building a FRONTEND-ONLY React application.
+
+STRICT RULES:
+- Do NOT create backend
+- Do NOT create APIs
+- Do NOT use Supabase, Firebase, or any auth service
+- Do NOT connect database
+- Do NOT generate server code
+- Use ONLY React + basic client-side state
+
+---
+
+## GOAL
+Build an **Owner Dashboard UI** for a villa/camping booking platform.
+
+The dashboard must be accessible at:
+👉 /owner
+
+---
+
+## AUTH (DEMO ONLY — FRONTEND MOCK)
+
+Login Flow:
+- Mobile number input
+- OTP input
+
+Demo Credentials:
+- Mobile Number: 9999999999
+- OTP: 000000
+
+Logic:
+- If mobile === 9999999999 AND otp === 000000 → login success
+- Else → show error message
+
+Store login state in localStorage (e.g. isOwnerLoggedIn = true)
+
+---
+
+## ROUTING
+
+Use React Router:
+
+- /owner → Login screen (if not logged in)
+- /owner/dashboard → Owner Dashboard (protected route)
+
+If not logged in, always redirect to /owner
+
+---
+
+## OWNER DASHBOARD UI (FRONTEND ONLY)
+
+### Navigation (mobile-first)
+Bottom nav with:
+- Dashboard
+- Calendar
+- Bookings
+- Profile
+
+---
+
+### Dashboard Screen
+- Property status summary
+- Emergency Block toggle (UI only, no logic)
+- Today’s status
+
+---
+
+### Calendar Screen
+- Monthly calendar UI
+- Color codes:
+  - Green = Available
+  - Red = Booked
+  - Yellow = Blocked
+- Clicking a date opens a bottom drawer to:
+  - Toggle status
+  - Change price (UI only)
+
+All data can be stored in React state or mock JSON.
+
+---
+
+### Pricing Screen
+- Inputs for:
+  - Weekday price
+  - Weekend price
+- Special date price list (UI only)
+
+---
+
+### Bookings Screen
+- List of mock bookings using dummy data
+
+---
+
+### Profile Screen
+- Owner name (mock)
+- Property name (mock)
+- Logout button (clears localStorage)
+
+---
+
+## UI GUIDELINES
+- Mobile-first layout
+- Clean admin UI
+- Use simple CSS or existing UI components if already present
+- No animations required
+
+---
+
+## FINAL REMINDER
+This is a **UI PROTOTYPE ONLY**.
+No backend, no API, no database.

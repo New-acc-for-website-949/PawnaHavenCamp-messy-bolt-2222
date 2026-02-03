@@ -1,0 +1,34 @@
+@radix-ui_react-dialog.js?v=97818aa5:339 Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}.
+
+AdminPropertyForm.tsx:264 Uncaught TypeError: Cannot read properties of undefined (reading 'map')
+    at UnitManager (AdminPropertyForm.tsx:264:41)
+AdminPropertyForm.tsx:264 Uncaught TypeError: Cannot read properties of undefined (reading 'map')
+    at UnitManager (AdminPropertyForm.tsx:264:41)
+chunk-T2SWDQEL.js?v=97818aa5:14032 The above error occurred in the <UnitManager> component:
+
+    at UnitManager (https://24c272a2-fb04-470b-acba-7128090eaf34-00-2s9ehzztzr3ux.kirk.replit.dev/src/components/AdminPropertyForm.tsx:34:24)
+    at div
+    at div
+    at div
+    at div
+    at form
+    at main
+    at div
+    at AdminPropertyForm (https://24c272a2-fb04-470b-acba-7128090eaf34-00-2s9ehzztzr3ux.kirk.replit.dev/src/components/AdminPropertyForm.tsx:1040:30)
+    at AdminDashboard (https://24c272a2-fb04-470b-acba-7128090eaf34-00-2s9ehzztzr3ux.kirk.replit.dev/src/pages/AdminDashboard.tsx:38:39)
+    at Suspense
+    at PageWrapper (https://24c272a2-fb04-470b-acba-7128090eaf34-00-2s9ehzztzr3ux.kirk.replit.dev/src/App.tsx:79:24)
+    at RenderedRoute (https://24c272a2-fb04-470b-acba-7128090eaf34-00-2s9ehzztzr3ux.kirk.replit.dev/node_modules/.vite/deps/react-router-dom.js?v=97818aa5:4088:5)
+    at Routes (https://24c272a2-fb04-470b-acba-7128090eaf34-00-2s9ehzztzr3ux.kirk.replit.dev/node_modules/.vite/deps/react-router-dom.js?v=97818aa5:4558:5)
+    at Router (https://24c272a2-fb04-470b-acba-7128090eaf34-00-2s9ehzztzr3ux.kirk.replit.dev/node_modules/.vite/deps/react-router-dom.js?v=97818aa5:4501:15)
+    at BrowserRouter (https://24c272a2-fb04-470b-acba-7128090eaf34-00-2s9ehzztzr3ux.kirk.replit.dev/node_modules/.vite/deps/react-router-dom.js?v=97818aa5:5247:5)
+    at Provider (https://24c272a2-fb04-470b-acba-7128090eaf34-00-2s9ehzztzr3ux.kirk.replit.dev/node_modules/.vite/deps/chunk-C6R24THA.js?v=97818aa5:38:15)
+    at TooltipProvider (https://24c272a2-fb04-470b-acba-7128090eaf34-00-2s9ehzztzr3ux.kirk.replit.dev/node_modules/.vite/deps/@radix-ui_react-tooltip.js?v=97818aa5:60:5)
+    at QueryClientProvider (https://24c272a2-fb04-470b-acba-7128090eaf34-00-2s9ehzztzr3ux.kirk.replit.dev/node_modules/.vite/deps/@tanstack_react-query.js?v=97818aa5:2934:3)
+    at _a (https://24c272a2-fb04-470b-acba-7128090eaf34-00-2s9ehzztzr3ux.kirk.replit.dev/node_modules/.vite/deps/react-helmet-async.js?v=97818aa5:624:5)
+    at App
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
+chunk-T2SWDQEL.js?v=97818aa5:19413 Uncaught TypeError: Cannot read properties of undefined (reading 'map')
+    at UnitManager (AdminPropertyForm.tsx:264:41)

@@ -1,0 +1,210 @@
+# ✅ FINAL REPLIT PROMPT — SHARE QR, LINK & WHATSAPP REFERRAL (FRONTEND + BACKEND)
+
+> **IMPORTANT RULES (DO NOT BREAK):**
+>
+> * This task extends the **existing Referral System**
+> * Do **NOT** change existing referral logic, earnings logic, or commission math
+> * Do **NOT** redesign unrelated UI
+> * Use existing authentication (JWT)
+> * Referral codes must remain **UPPERCASE**
+> * Blocked users must not access share features
+
+---
+
+## 🧠 CONTEXT
+
+We already have a **Referral & Earnings System** with:
+
+* Registration via OTP
+* Referral dashboard
+* Earnings & withdrawals
+
+Now we are adding a **new tab** inside **Check Earning Page**:
+
+> **“Share QR & Link”**
+
+This tab helps referral users easily promote their referral using:
+
+1. QR Code
+2. Referral Link
+3. Referral Code
+4. WhatsApp Share Button
+
+---
+
+## 🎯 BUSINESS REQUIREMENTS (VERY IMPORTANT)
+
+When a customer:
+
+* Scans the QR code OR
+* Opens the referral link OR
+* Manually enters the referral code
+
+Then:
+
+* Customer lands on the **main website**
+* Referral code is **automatically applied** to booking form
+* Referral code must persist across page refreshes
+* Referral code must be **locked** (cannot be changed by user)
+
+### 💰 COMMISSION LOGIC (DO NOT MODIFY)
+
+From **30% advance payment**:
+
+* **15%** → customer discount
+* **35%** → referral user earning
+* **50%** → platform commission
+
+Remaining **70%** → paid offline to property owner
+
+---
+
+## 🔧 BACKEND REQUIREMENTS
+
+### 1️⃣ Referral Share API
+
+Create or extend an API endpoint:
+
+```
+GET /api/referrals/share
+```
+
+**JWT Required**
+
+**Response must include:**
+
+```json
+{
+  "referralCode": "ABC123",
+  "referralLink": "https://your-domain/?ref=ABC123",
+  "referralQrCode": "data:image/png;base64,..."
+}
+```
+
+#### Rules:
+
+* Referral code must be returned in **UPPERCASE**
+* Only `active` users allowed
+* Blocked users → 403 Forbidden
+
+---
+
+### 2️⃣ QR Code Generation
+
+* Generate QR code on backend using referralLink
+* Use a deterministic method (same QR for same referral code)
+* Return as **Data URI** (base64) for frontend display & download
+
+---
+
+## 🎨 FRONTEND REQUIREMENTS
+
+### 3️⃣ New Tab: **“Share QR & Link”**
+
+Add a new tab alongside existing:
+
+* Withdraw
+* Stats
+* **Share QR & Link** (NEW)
+
+---
+
+### 4️⃣ UI Sections inside Share Tab
+
+#### 🔹 Section 1: Your QR Code
+
+* Display QR image
+* “Download QR” button
+
+#### 🔹 Section 2: Your Referral Link
+
+* Show full URL
+* “Copy Link” button
+
+#### 🔹 Section 3: Your Referral Code
+
+* Show referral code
+* “Copy Code” button
+
+---
+
+### 5️⃣ 🔗 WhatsApp “Share Referral” Button (MANDATORY)
+
+Add a **WhatsApp Share button** that:
+
+* Opens WhatsApp share intent
+* Pre-fills message like:
+
+```
+Hey!  
+Book villas, cottages & camping in Lonavala / Pawna Lake 🏕️🏡  
+
+Use my referral link to get instant discount:  
+https://your-domain/?ref=ABC123
+```
+
+#### Technical:
+
+* Use `https://wa.me/?text=ENCODED_MESSAGE`
+* Message must dynamically include referral link
+* Button must be visible in Share tab
+* Works on mobile & desktop
+
+---
+
+## 🌐 AUTO-APPLY REFERRAL LOGIC (CRITICAL)
+
+On **main website entry**:
+
+1. Detect referral code from:
+
+   * `?ref=ABC123`
+2. Validate referral code via backend
+3. Store referral code in `localStorage`
+4. Auto-fill referral code in booking form
+5. Lock the referral input field
+6. Persist across:
+
+   * Page reload
+   * Navigation
+   * Multiple steps
+
+---
+
+## 🔐 SECURITY RULES
+
+* Share API requires valid JWT
+* Blocked users cannot:
+
+  * Access share tab
+  * Generate QR
+  * Share links
+* Referral code lookup must be **case-insensitive**
+* Stored referral codes must be **UPPERCASE**
+
+---
+
+## ⛔ DO NOT DO
+
+❌ Do NOT modify commission math
+❌ Do NOT create new referral tables
+❌ Do NOT add admin APIs
+❌ Do NOT add payment gateway logic
+❌ Do NOT redesign unrelated pages
+
+---
+
+## ✅ COMPLETION REQUIREMENTS
+
+When done, reply with:
+
+1. Share API response structure
+2. QR generation approach
+3. WhatsApp share implementation details
+4. Referral auto-apply & persistence logic
+
+Then stop.
+
+---
+
+🚀 **Proceed with implementation now.**

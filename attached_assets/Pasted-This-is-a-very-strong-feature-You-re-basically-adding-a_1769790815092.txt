@@ -1,0 +1,150 @@
+This is a **very strong feature** 👍
+You’re basically adding a **daily ledger / tally system** on top of your calendar — mobile-first, owner-friendly, and it will finally give you **real availability truth** across Admin, Owner, and Public.
+
+---
+
+**Context (DO NOT IGNORE):**
+
+* KEEP VILLAS FLOW 100% AS IT IS (logic-wise)
+* This feature applies to:
+
+  * Villas (single calendar)
+  * Campings_Cottages (unit-level calendar)
+* Existing calendar & pricing logic MUST be reused
+* Mobile-first UX is mandatory
+
+---
+
+## FEATURE: Daily Booking Ledger / Tally Popup (Owner Dashboard)
+
+### Goal
+
+When an owner clicks on **any calendar date cell**, open a **mobile-optimized popup** that shows real booking data and allows manual tally entries.
+This must sync availability across:
+
+* Owner Dashboard
+* Admin Panel
+* Public Website (real-time)
+
+---
+
+## PHASE 1: Calendar Cell Click → Ledger Popup (UI)
+
+### Behavior
+
+On **calendar date cell click**:
+
+Open a **bottom-sheet style popup (mobile-first)** showing:
+
+**Header Section**
+
+* Property / Unit Name
+
+  * Villa → Villa Name
+  * Campings_Cottages → Selected Unit Name (Tent / AC Cottage etc.)
+* Selected Date (e.g. `31 Jan 2026`)
+* Capacity display:
+
+  * `available / total persons`
+  * Available → green
+  * Total → orange
+
+---
+
+## PHASE 2: Daily Booking List (Read + Manual Entry)
+
+### Inside Popup → Booking List
+
+Show a table/list for that specific **date**:
+
+| # | Customer Name | Persons | Check-in | Check-out | Payment | Amount |
+| - | ------------- | ------- | -------- | --------- | ------- | ------ |
+
+* Auto-filter bookings that **include this date**
+* Payment mode: Online / Offline
+* Amount shown per booking
+
+### Add Entry
+
+* “+ Add Entry” button
+* Manual entry fields:
+
+  * Customer name
+  * Number of persons
+  * Check-in / Check-out (auto-select clicked date)
+  * Payment mode (online / offline)
+  * Amount
+
+---
+
+## PHASE 3: Availability Auto-Sync Logic (CRITICAL)
+
+### Rules
+
+* Sum **total persons booked** (online + manual entries)
+* Subtract from **total persons capacity**
+* Update:
+
+  * Calendar cell availability
+  * Admin dashboard
+  * Owner dashboard
+  * Public website (real-time)
+
+### Scope
+
+* Villas → property-level availability
+* Campings_Cottages → unit-level availability
+
+⚠️ NO duplicate logic
+⚠️ NO separate availability system
+
+---
+
+## PHASE 4: Monthly Tally & Export
+
+### Goal
+
+Help owners maintain **monthly accounting & tally**.
+
+### Features
+
+* Filter by:
+
+  * Month
+  * Property / Unit
+* Export formats:
+
+  * **Excel (.xlsx) – PRIMARY (best for Indian owners)**
+  * PDF (secondary – for sharing / print)
+
+### Export Includes
+
+* Date-wise bookings
+* Total persons
+* Total revenue
+* Payment mode breakdown (online/offline)
+
+---
+
+## NON-NEGOTIABLE RULES
+
+* Reuse existing calendar component
+* Mobile-first popup (bottom sheet preferred)
+* No impact on villa booking flow
+* Availability must remain a **single source of truth**
+* All changes must reflect instantly across system
+
+---
+
+### Expected Result
+
+Owners can:
+
+* Click any date
+* See exact bookings
+* Add offline/manual entries
+* Instantly see real availability
+* Download monthly tally reports
+
+---
+

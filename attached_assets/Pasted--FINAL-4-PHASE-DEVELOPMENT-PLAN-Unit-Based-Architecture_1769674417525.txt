@@ -1,0 +1,264 @@
+
+
+# ✅ FINAL 4-PHASE DEVELOPMENT PLAN
+
+**Unit-Based Architecture for “Campings & Cottages” (Villas 100% Untouched)**
+
+---
+
+## 🔹 PHASE 1: DATABASE CHANGES (FOUNDATION)
+
+### Goal
+
+Introduce a **unit-based structure ONLY for `campings_cottages`** while keeping **villas completely unchanged**.
+
+---
+
+### Tasks
+
+1. **Update Category Constraint**
+
+* Update `properties.category` constraint to allow only:
+
+  * `'villa'`
+  * `'campings_cottages'`
+
+2. **Create `property_units` Table**
+
+```
+id (PK)
+property_id (FK → properties.id)
+name
+capacity
+total_quantity
+created_at
+```
+
+3. **Create `unit_calendar` Table**
+
+```
+id (PK)
+unit_id (FK → property_units.id)
+date
+price
+is_weekend
+is_special
+available_quantity
+```
+
+4. **Data Migration**
+
+* Convert existing `camping` and `cottage` → `campings_cottages`
+* **DO NOT auto-create units**
+* Units will be added manually by Admin/Owner later
+
+---
+
+### DO NOT
+
+* Modify villa pricing or booking tables
+* Remove or rename any existing columns
+* Create dummy / fake units automatically
+
+---
+
+### Output
+
+* **SQL migration script ONLY**
+* ❌ No backend changes
+* ❌ No frontend changes
+
+⏸ **STOP AFTER PHASE 1 — WAIT FOR APPROVAL**
+
+---
+
+## 🔹 PHASE 2: BACKEND CHANGES (LOGIC SEPARATION)
+
+### Goal
+
+Add **unit-aware APIs ONLY for `campings_cottages`**, while preserving **villa APIs exactly as-is**.
+
+---
+
+### Tasks
+
+1. **GET `/api/properties/list` & `/api/properties/public-list`**
+
+* Villas:
+
+  * Response **unchanged**
+* Campings & Cottages:
+
+  * Return `starting_from_price = MIN(unit_calendar.price)`
+
+2. **GET `/api/properties/:slug`**
+
+* Villas:
+
+  * Response **unchanged**
+* Campings & Cottages:
+
+  * Include `units[]` with:
+
+    * name
+    * capacity
+    * total_quantity
+    * available_quantity
+    * calendar pricing
+
+3. **Calendar Logic**
+
+* Reuse **existing calendar pricing logic**
+* Scope calendar strictly by `unit_id`
+* **No new calendar system**
+
+4. **Admin APIs**
+
+* CRUD for:
+
+  * property units
+  * unit calendar pricing & availability
+
+---
+
+### DO NOT
+
+* Modify villa controllers
+* Share logic between villa & unit systems
+* Rebuild calendar logic from scratch
+
+---
+
+### Output
+
+* Updated backend controllers
+* Sample API responses
+
+⏸ **STOP AFTER PHASE 2 — WAIT FOR APPROVAL**
+
+---
+
+## 🔹 PHASE 3: FRONTEND CHANGES (USER EXPERIENCE)
+
+### Goal
+
+Merge categories visually and add **unit selection UI ONLY for Campings & Cottages**, keeping villas pixel-perfect.
+
+---
+
+### Tasks
+
+1. **Index Page**
+
+* Merge:
+
+  * “Camping” + “Cottage” → **“Campings & Cottages”**
+
+2. **Property Details Page (Campings & Cottages ONLY)**
+
+* Keep **existing mobile layout exactly the same**
+* Add **horizontal Unit Tabs above the price section**
+* Switching unit updates:
+
+  * Price
+  * Calendar
+  * Availability
+  * Capacity
+
+3. **Calendar**
+
+* Reuse **existing calendar component**
+* Bind calendar to selected `unit_id`
+* ❌ No calendar duplication
+
+4. **TypeScript**
+
+* Extend interfaces to support units
+* Villas must remain backward-compatible
+
+---
+
+### DO NOT
+
+* Touch villa PropertyDetails UI or booking flow
+* Change mobile layout structure
+* Duplicate calendar components
+
+---
+
+### Output
+
+* Updated frontend components
+* Updated TypeScript types
+
+⏸ **STOP AFTER PHASE 3 — WAIT FOR APPROVAL**
+
+---
+
+## 🔹 PHASE 4: ADMIN & OWNER DASHBOARD (CONTROL PANEL)
+
+### Goal
+
+Enable **full unit management for Campings & Cottages** without affecting villa workflows.
+
+---
+
+### Tasks
+
+1. **Add / Edit Property Form**
+
+* When `category = campings_cottages`:
+
+  * Show **Unit Manager**
+
+2. **Unit Manager Features**
+
+* Add / Edit / Delete units
+* Per-unit fields:
+
+  * Name
+  * Capacity
+  * Total units
+  * Images
+  * Amenities
+  * Activities
+  * Highlights
+  * Privacy Policy
+
+3. **Pricing & Availability**
+
+* Unit-level pricing calendar (reuse existing calendar UI)
+* Availability controlled **per unit per date**
+
+4. **Owner Dashboard**
+
+* Owners can manage **only their own units**
+
+---
+
+### DO NOT
+
+* Modify villa property forms
+* Apply unit logic to villas
+
+---
+
+### Output
+
+* Admin UI components
+* Backend endpoints used
+
+---
+
+## 🚨 NON-NEGOTIABLE RULES (APPLY TO ALL PHASES)
+
+* Villas must remain **100% backward-compatible**
+* Unit logic applies **ONLY** to `campings_cottages`
+* Existing mobile design **must not change**
+* Reuse existing calendar logic — **no recreation**
+* No auto-creation of fake units
+* **Each phase requires explicit approval before continuing**
+
+---
+
+

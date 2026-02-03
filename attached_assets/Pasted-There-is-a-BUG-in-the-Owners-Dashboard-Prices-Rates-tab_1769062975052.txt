@@ -1,0 +1,99 @@
+There is a BUG in the Owners Dashboard → Prices / Rates tab.
+This is NOT a UI redesign request.
+This is a DATA FLOW + STATE + PERSISTENCE issue.
+
+------------------------------------------------
+CURRENT PROBLEM (EXACT BEHAVIOR)
+------------------------------------------------
+1. In Owners Dashboard → Prices / Rates tab:
+   - Owner sets:
+     - Weekday price
+     - Weekend price
+     - Special date price
+   - Clicks SAVE / UPDATE
+
+2. After saving:
+   - ONLY special prices appear on the calendar
+   - Weekday & weekend prices are NOT reflected on the calendar
+
+3. When navigating away and coming back to Prices / Rates tab:
+   - Previously set prices are NOT shown
+   - Fields appear empty / reset
+
+------------------------------------------------
+EXPECTED BEHAVIOR
+------------------------------------------------
+- Weekday prices should appear on calendar (Mon–Fri)
+- Weekend prices should appear on calendar (Sat–Sun)
+- Special prices should override default prices for selected dates
+- After saving:
+   - All prices must persist
+   - Prices must reload correctly when revisiting the tab
+   - Calendar must always reflect saved data
+
+------------------------------------------------
+LIKELY ROOT CAUSES (PLEASE VERIFY)
+------------------------------------------------
+One or more of these issues may exist:
+- Weekday / weekend prices not being saved to DB
+- API only saving special prices
+- Calendar rendering logic only listens to specialPrices
+- Prices tab uses local state without refetching saved data
+- Missing GET call to load saved prices on component mount
+- Mismatch between API response keys and frontend state
+
+------------------------------------------------
+FIX REQUIREMENTS
+------------------------------------------------
+1. Ensure ALL price types are saved:
+   - weekday_price
+   - weekend_price
+   - special_prices (date-based)
+
+2. Backend:
+   - Verify update API persists ALL price fields
+   - Verify fetch API returns ALL price fields
+
+3. Frontend:
+   - On Prices / Rates tab load:
+       - Fetch saved prices from backend
+       - Populate input fields correctly
+   - On Save:
+       - Send complete price payload (not partial)
+   - On Calendar render:
+       - Apply price priority:
+           special price > weekend price > weekday price
+
+------------------------------------------------
+CALENDAR LOGIC (IMPORTANT)
+------------------------------------------------
+Calendar pricing rules:
+- If date has special price → show it
+- Else if date is Saturday or Sunday → show weekend price
+- Else → show weekday price
+
+This logic must be applied consistently.
+
+------------------------------------------------
+STATE MANAGEMENT RULES
+------------------------------------------------
+- Do NOT rely only on local React state
+- Prices must be source-of-truth from backend
+- After save → re-fetch prices OR update global state safely
+- On tab revisit → data must persist
+
+------------------------------------------------
+DO NOT DO
+------------------------------------------------
+- Do NOT change UI layout unnecessarily
+- Do NOT change property schema unless required
+- Do NOT break Admin or Website pricing logic
+- Do NOT hardcode values
+
+------------------------------------------------
+SUCCESS CRITERIA
+------------------------------------------------
+- Owner sets prices → saves → sees correct prices on calendar
+- Owner revisits Prices / Rates tab → sees saved values
+- Calendar always shows correct pricing logic
+- No data loss on refresh or navigation

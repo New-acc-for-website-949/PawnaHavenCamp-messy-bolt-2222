@@ -1,0 +1,131 @@
+2AdminPropertyForm.tsx:175 Uncaught ReferenceError: DialogDescription is not defined
+    at AdminPropertyForm.tsx:175:22
+    at Array.map (<anonymous>)
+    at UnitManager (AdminPropertyForm.tsx:144:16)
+    at renderWithHooks (chunk-T2SWDQEL.js?v=ca599b91:11548:26)
+    at updateFunctionComponent (chunk-T2SWDQEL.js?v=ca599b91:14582:28)
+    at beginWork (chunk-T2SWDQEL.js?v=ca599b91:15924:22)
+    at HTMLUnknownElement.callCallback2 (chunk-T2SWDQEL.js?v=ca599b91:3674:22)
+    at Object.invokeGuardedCallbackDev (chunk-T2SWDQEL.js?v=ca599b91:3699:24)
+    at invokeGuardedCallback (chunk-T2SWDQEL.js?v=ca599b91:3733:39)
+    at beginWork$1 (chunk-T2SWDQEL.js?v=ca599b91:19765:15)
+(anonymous) @ AdminPropertyForm.tsx:175
+UnitManager @ AdminPropertyForm.tsx:144
+renderWithHooks @ chunk-T2SWDQEL.js?v=ca599b91:11548
+updateFunctionComponent @ chunk-T2SWDQEL.js?v=ca599b91:14582
+beginWork @ chunk-T2SWDQEL.js?v=ca599b91:15924
+callCallback2 @ chunk-T2SWDQEL.js?v=ca599b91:3674
+invokeGuardedCallbackDev @ chunk-T2SWDQEL.js?v=ca599b91:3699
+invokeGuardedCallback @ chunk-T2SWDQEL.js?v=ca599b91:3733
+beginWork$1 @ chunk-T2SWDQEL.js?v=ca599b91:19765
+performUnitOfWork @ chunk-T2SWDQEL.js?v=ca599b91:19198
+workLoopSync @ chunk-T2SWDQEL.js?v=ca599b91:19137
+renderRootSync @ chunk-T2SWDQEL.js?v=ca599b91:19116
+recoverFromConcurrentError @ chunk-T2SWDQEL.js?v=ca599b91:18736
+performConcurrentWorkOnRoot @ chunk-T2SWDQEL.js?v=ca599b91:18684
+workLoop @ chunk-T2SWDQEL.js?v=ca599b91:197
+flushWork @ chunk-T2SWDQEL.js?v=ca599b91:176
+performWorkUntilDeadline @ chunk-T2SWDQEL.js?v=ca599b91:384Understand this error
+chunk-T2SWDQEL.js?v=ca599b91:14032 The above error occurred in the <UnitManager> component:
+
+    at UnitManager (https://bb26f666-5d8d-40b8-9df5-107a0a714347-00-2uwknumfewtxs.riker.replit.dev/src/components/AdminPropertyForm.tsx:34:24)
+    at div
+    at div
+    at div
+    at div
+    at form
+    at main
+    at div
+    at AdminPropertyForm (https://bb26f666-5d8d-40b8-9df5-107a0a714347-00-2uwknumfewtxs.riker.replit.dev/src/components/AdminPropertyForm.tsx:839:30)
+    at AdminDashboard (https://bb26f666-5d8d-40b8-9df5-107a0a714347-00-2uwknumfewtxs.riker.replit.dev/src/pages/AdminDashboard.tsx:38:39)
+    at Suspense
+    at PageWrapper (https://bb26f666-5d8d-40b8-9df5-107a0a714347-00-2uwknumfewtxs.riker.replit.dev/src/App.tsx:75:24)
+    at RenderedRoute (https://bb26f666-5d8d-40b8-9df5-107a0a714347-00-2uwknumfewtxs.riker.replit.dev/node_modules/.vite/deps/react-router-dom.js?v=ca599b91:4088:5)
+    at Routes (https://bb26f666-5d8d-40b8-9df5-107a0a714347-00-2uwknumfewtxs.riker.replit.dev/node_modules/.vite/deps/react-router-dom.js?v=ca599b91:4558:5)
+    at Router (https://bb26f666-5d8d-40b8-9df5-107a0a714347-00-2uwknumfewtxs.riker.replit.dev/node_modules/.vite/deps/react-router-dom.js?v=ca599b91:4501:15)
+    at BrowserRouter (https://bb26f666-5d8d-40b8-9df5-107a0a714347-00-2uwknumfewtxs.riker.replit.dev/node_modules/.vite/deps/react-router-dom.js?v=ca599b91:5247:5)
+    at Provider (https://bb26f666-5d8d-40b8-9df5-107a0a714347-00-2uwknumfewtxs.riker.replit.dev/node_modules/.vite/deps/chunk-C6R24THA.js?v=ca599b91:38:15)
+    at TooltipProvider (https://bb26f666-5d8d-40b8-9df5-107a0a714347-00-2uwknumfewtxs.riker.replit.dev/node_modules/.vite/deps/@radix-ui_react-tooltip.js?v=ca599b91:60:5)
+    at QueryClientProvider (https://bb26f666-5d8d-40b8-9df5-107a0a714347-00-2uwknumfewtxs.riker.replit.dev/node_modules/.vite/deps/@tanstack_react-query.js?v=ca599b91:2934:3)
+    at _a (https://bb26f666-5d8d-40b8-9df5-107a0a714347-00-2uwknumfewtxs.riker.replit.dev/node_modules/.vite/deps/react-helmet-async.js?v=ca599b91:624:5)
+    at App
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
+logCapturedError @ chunk-T2SWDQEL.js?v=ca599b91:14032
+update.callback @ chunk-T2SWDQEL.js?v=ca599b91:14052
+callCallback @ chunk-T2SWDQEL.js?v=ca599b91:11248
+commitUpdateQueue @ chunk-T2SWDQEL.js?v=ca599b91:11265
+commitLayoutEffectOnFiber @ chunk-T2SWDQEL.js?v=ca599b91:17093
+commitLayoutMountEffects_complete @ chunk-T2SWDQEL.js?v=ca599b91:17980
+commitLayoutEffects_begin @ chunk-T2SWDQEL.js?v=ca599b91:17969
+commitLayoutEffects @ chunk-T2SWDQEL.js?v=ca599b91:17920
+commitRootImpl @ chunk-T2SWDQEL.js?v=ca599b91:19353
+commitRoot @ chunk-T2SWDQEL.js?v=ca599b91:19277
+finishConcurrentRender @ chunk-T2SWDQEL.js?v=ca599b91:18760
+performConcurrentWorkOnRoot @ chunk-T2SWDQEL.js?v=ca599b91:18718
+workLoop @ chunk-T2SWDQEL.js?v=ca599b91:197
+flushWork @ chunk-T2SWDQEL.js?v=ca599b91:176
+performWorkUntilDeadline @ chunk-T2SWDQEL.js?v=ca599b91:384Understand this error
+chunk-T2SWDQEL.js?v=ca599b91:14032 The above error occurred in the <UnitManager> component:
+
+    at UnitManager (https://bb26f666-5d8d-40b8-9df5-107a0a714347-00-2uwknumfewtxs.riker.replit.dev/src/components/AdminPropertyForm.tsx:34:24)
+    at div
+    at main
+    at div
+    at AdminPropertyForm (https://bb26f666-5d8d-40b8-9df5-107a0a714347-00-2uwknumfewtxs.riker.replit.dev/src/components/AdminPropertyForm.tsx:839:30)
+    at AdminDashboard (https://bb26f666-5d8d-40b8-9df5-107a0a714347-00-2uwknumfewtxs.riker.replit.dev/src/pages/AdminDashboard.tsx:38:39)
+    at Suspense
+    at PageWrapper (https://bb26f666-5d8d-40b8-9df5-107a0a714347-00-2uwknumfewtxs.riker.replit.dev/src/App.tsx:75:24)
+    at RenderedRoute (https://bb26f666-5d8d-40b8-9df5-107a0a714347-00-2uwknumfewtxs.riker.replit.dev/node_modules/.vite/deps/react-router-dom.js?v=ca599b91:4088:5)
+    at Routes (https://bb26f666-5d8d-40b8-9df5-107a0a714347-00-2uwknumfewtxs.riker.replit.dev/node_modules/.vite/deps/react-router-dom.js?v=ca599b91:4558:5)
+    at Router (https://bb26f666-5d8d-40b8-9df5-107a0a714347-00-2uwknumfewtxs.riker.replit.dev/node_modules/.vite/deps/react-router-dom.js?v=ca599b91:4501:15)
+    at BrowserRouter (https://bb26f666-5d8d-40b8-9df5-107a0a714347-00-2uwknumfewtxs.riker.replit.dev/node_modules/.vite/deps/react-router-dom.js?v=ca599b91:5247:5)
+    at Provider (https://bb26f666-5d8d-40b8-9df5-107a0a714347-00-2uwknumfewtxs.riker.replit.dev/node_modules/.vite/deps/chunk-C6R24THA.js?v=ca599b91:38:15)
+    at TooltipProvider (https://bb26f666-5d8d-40b8-9df5-107a0a714347-00-2uwknumfewtxs.riker.replit.dev/node_modules/.vite/deps/@radix-ui_react-tooltip.js?v=ca599b91:60:5)
+    at QueryClientProvider (https://bb26f666-5d8d-40b8-9df5-107a0a714347-00-2uwknumfewtxs.riker.replit.dev/node_modules/.vite/deps/@tanstack_react-query.js?v=ca599b91:2934:3)
+    at _a (https://bb26f666-5d8d-40b8-9df5-107a0a714347-00-2uwknumfewtxs.riker.replit.dev/node_modules/.vite/deps/react-helmet-async.js?v=ca599b91:624:5)
+    at App
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
+logCapturedError @ chunk-T2SWDQEL.js?v=ca599b91:14032
+update.callback @ chunk-T2SWDQEL.js?v=ca599b91:14052
+callCallback @ chunk-T2SWDQEL.js?v=ca599b91:11248
+commitUpdateQueue @ chunk-T2SWDQEL.js?v=ca599b91:11265
+commitLayoutEffectOnFiber @ chunk-T2SWDQEL.js?v=ca599b91:17093
+commitLayoutMountEffects_complete @ chunk-T2SWDQEL.js?v=ca599b91:17980
+commitLayoutEffects_begin @ chunk-T2SWDQEL.js?v=ca599b91:17969
+commitLayoutEffects @ chunk-T2SWDQEL.js?v=ca599b91:17920
+commitRootImpl @ chunk-T2SWDQEL.js?v=ca599b91:19353
+commitRoot @ chunk-T2SWDQEL.js?v=ca599b91:19277
+finishConcurrentRender @ chunk-T2SWDQEL.js?v=ca599b91:18760
+performConcurrentWorkOnRoot @ chunk-T2SWDQEL.js?v=ca599b91:18718
+workLoop @ chunk-T2SWDQEL.js?v=ca599b91:197
+flushWork @ chunk-T2SWDQEL.js?v=ca599b91:176
+performWorkUntilDeadline @ chunk-T2SWDQEL.js?v=ca599b91:384Understand this error
+chunk-T2SWDQEL.js?v=ca599b91:19413 Uncaught ReferenceError: DialogDescription is not defined
+    at AdminPropertyForm.tsx:175:22
+    at Array.map (<anonymous>)
+    at UnitManager (AdminPropertyForm.tsx:144:16)
+    at renderWithHooks (chunk-T2SWDQEL.js?v=ca599b91:11548:26)
+    at updateFunctionComponent (chunk-T2SWDQEL.js?v=ca599b91:14582:28)
+    at beginWork (chunk-T2SWDQEL.js?v=ca599b91:15924:22)
+    at beginWork$1 (chunk-T2SWDQEL.js?v=ca599b91:19753:22)
+    at performUnitOfWork (chunk-T2SWDQEL.js?v=ca599b91:19198:20)
+    at workLoopSync (chunk-T2SWDQEL.js?v=ca599b91:19137:13)
+    at renderRootSync (chunk-T2SWDQEL.js?v=ca599b91:19116:15)
+(anonymous) @ AdminPropertyForm.tsx:175
+UnitManager @ AdminPropertyForm.tsx:144
+renderWithHooks @ chunk-T2SWDQEL.js?v=ca599b91:11548
+updateFunctionComponent @ chunk-T2SWDQEL.js?v=ca599b91:14582
+beginWork @ chunk-T2SWDQEL.js?v=ca599b91:15924
+beginWork$1 @ chunk-T2SWDQEL.js?v=ca599b91:19753
+performUnitOfWork @ chunk-T2SWDQEL.js?v=ca599b91:19198
+workLoopSync @ chunk-T2SWDQEL.js?v=ca599b91:19137
+renderRootSync @ chunk-T2SWDQEL.js?v=ca599b91:19116
+recoverFromConcurrentError @ chunk-T2SWDQEL.js?v=ca599b91:18736
+performConcurrentWorkOnRoot @ chunk-T2SWDQEL.js?v=ca599b91:18684
+workLoop @ chunk-T2SWDQEL.js?v=ca599b91:197
+flushWork @ chunk-T2SWDQEL.js?v=ca599b91:176
+performWorkUntilDeadline @ chunk-T2SWDQEL.js?v=ca599b91:384Understand this error

@@ -1,0 +1,81 @@
+UI/UX IMPROVEMENT REQUEST (FRONTEND ONLY)
+
+Page: Property Details Page
+Buttons:
+1) BOOK STAY
+2) WhatsApp & Call
+3) OPEN IN MAPS
+4) VIEW CALENDAR
+
+------------------------------------------------
+CURRENT ISSUE
+------------------------------------------------
+- Buttons look flat
+- They don’t feel highly clickable
+- Need stronger visual affordance (tap confidence), especially on mobile
+
+------------------------------------------------
+EXPECTED UI/UX RESULT
+------------------------------------------------
+Buttons should look:
+- 3D / elevated
+- Clearly tappable
+- Premium & modern
+- Consistent with charcoal black + golden theme
+
+Users should instantly feel:
+👉 “Yes, this is a button, I should tap this”
+
+------------------------------------------------
+DESIGN REQUIREMENTS (IMPORTANT)
+------------------------------------------------
+Apply the following to ALL 4 buttons:
+
+1️⃣ 3D ELEVATION
+- Add subtle box-shadow (bottom-heavy)
+- Slight gradient (top lighter, bottom darker)
+- Rounded corners (medium radius, not flat)
+
+2️⃣ PRESS EFFECT (MUST)
+- On tap / click:
+    - Button slightly moves down (translateY)
+    - Shadow reduces
+    - Feels like physical press
+
+3️⃣ HOVER / FOCUS STATE (Desktop)
+- Slight glow or highlight
+- Shadow intensifies
+- Cursor pointer clearly visible
+
+4️⃣ ICON + TEXT BALANCE
+- Icons should be slightly raised
+- Text bold enough for outdoor usage (sunlight)
+
+------------------------------------------------
+COLOR DIRECTION
+------------------------------------------------
+- BOOK STAY → Primary gold button
+- WhatsApp & Call → Green-accent but still premium
+- OPEN IN MAPS → Dark base with gold border
+- VIEW CALENDAR → Secondary gold-outline 3D style
+
+Maintain:
+- Charcoal black background
+- Gold highlights
+- No neon / cheap colors
+
+------------------------------------------------
+TECH CONSTRAINTS
+------------------------------------------------
+- FRONTEND ONLY
+- Do NOT change logic, routes, or click handlers
+- Do NOT change button order or labels
+- CSS / Tailwind / styled-components only
+
+------------------------------------------------
+SUCCESS CRITERIA
+------------------------------------------------
+- Buttons visually pop from background
+- Clear depth & press feedback
+- Strong mobile tap confidence
+- Premium “booking app” feel

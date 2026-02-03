@@ -1,0 +1,217 @@
+Download the React DevTools for a better development experience: https://reactjs.org/link/react-devtools
+/api/properties/units/1:1  Failed to load resource: the server responded with a status of 404 (Not Found)Understand this error
+PWAInstallButton.tsx:22 PWA: beforeinstallprompt event fired
+dashboard:1 Banner not shown: beforeinstallpromptevent.preventDefault() called. The page must call beforeinstallpromptevent.prompt() to show the banner.
+/api/properties/units/2:1  Failed to load resource: the server responded with a status of 404 (Not Found)Understand this error
+/api/properties/units/1:1  Failed to load resource: the server responded with a status of 404 (Not Found)Understand this error
+/api/properties/units/2:1  Failed to load resource: the server responded with a status of 404 (Not Found)Understand this error
+workbox-ca84f546.js:44 workbox The navigation route /__replco/workspace_iframe.html?initialPath=%2F&id=%3Ar65%3A is not being used, since the URL being navigated to doesn't match the allowlist.
+workbox-ca84f546.js:44 workbox Router is responding to: /
+workbox-ca84f546.js:44 workbox Router is responding to: https://images.unsplash.com/photo-1504280390367-361c6d9f38f4
+workbox-ca84f546.js:44 workbox Using CacheFirst to respond to 'https://images.unsplash.com/photo-1504280390367-361c6d9f38f4'
+api.ts:135  GET https://24c272a2-fb04-470b-acba-7128090eaf34-00-2s9ehzztzr3ux.kirk.replit.dev/api/properties/TKAE8/units 500 (Internal Server Error)
+getUnits @ api.ts:135
+fetchData @ Rates.tsx:40
+await in fetchData
+(anonymous) @ Rates.tsx:117
+commitHookEffectListMount @ chunk-T2SWDQEL.js?v=97818aa5:16915
+commitPassiveMountOnFiber @ chunk-T2SWDQEL.js?v=97818aa5:18156
+commitPassiveMountEffects_complete @ chunk-T2SWDQEL.js?v=97818aa5:18129
+commitPassiveMountEffects_begin @ chunk-T2SWDQEL.js?v=97818aa5:18119
+commitPassiveMountEffects @ chunk-T2SWDQEL.js?v=97818aa5:18109
+flushPassiveEffectsImpl @ chunk-T2SWDQEL.js?v=97818aa5:19490
+flushPassiveEffects @ chunk-T2SWDQEL.js?v=97818aa5:19447
+performSyncWorkOnRoot @ chunk-T2SWDQEL.js?v=97818aa5:18868
+flushSyncCallbacks @ chunk-T2SWDQEL.js?v=97818aa5:9119
+commitRootImpl @ chunk-T2SWDQEL.js?v=97818aa5:19432
+commitRoot @ chunk-T2SWDQEL.js?v=97818aa5:19277
+finishConcurrentRender @ chunk-T2SWDQEL.js?v=97818aa5:18805
+performConcurrentWorkOnRoot @ chunk-T2SWDQEL.js?v=97818aa5:18718
+workLoop @ chunk-T2SWDQEL.js?v=97818aa5:197
+flushWork @ chunk-T2SWDQEL.js?v=97818aa5:176
+performWorkUntilDeadline @ chunk-T2SWDQEL.js?v=97818aa5:384Understand this error
+api.ts:135  GET https://24c272a2-fb04-470b-acba-7128090eaf34-00-2s9ehzztzr3ux.kirk.replit.dev/api/properties/TKAE8/units 500 (Internal Server Error)
+getUnits @ api.ts:135
+fetchData @ Rates.tsx:40
+await in fetchData
+(anonymous) @ Rates.tsx:117
+commitHookEffectListMount @ chunk-T2SWDQEL.js?v=97818aa5:16915
+commitPassiveMountOnFiber @ chunk-T2SWDQEL.js?v=97818aa5:18156
+commitPassiveMountEffects_complete @ chunk-T2SWDQEL.js?v=97818aa5:18129
+commitPassiveMountEffects_begin @ chunk-T2SWDQEL.js?v=97818aa5:18119
+commitPassiveMountEffects @ chunk-T2SWDQEL.js?v=97818aa5:18109
+flushPassiveEffectsImpl @ chunk-T2SWDQEL.js?v=97818aa5:19490
+flushPassiveEffects @ chunk-T2SWDQEL.js?v=97818aa5:19447
+(anonymous) @ chunk-T2SWDQEL.js?v=97818aa5:19328
+workLoop @ chunk-T2SWDQEL.js?v=97818aa5:197
+flushWork @ chunk-T2SWDQEL.js?v=97818aa5:176
+performWorkUntilDeadline @ chunk-T2SWDQEL.js?v=97818aa5:384Understand this error
+api.ts:135  GET https://24c272a2-fb04-470b-acba-7128090eaf34-00-2s9ehzztzr3ux.kirk.replit.dev/api/properties/TKAE8/units 500 (Internal Server Error)
+getUnits @ api.ts:135
+fetchData @ Rates.tsx:40
+await in fetchData
+handleSave @ Rates.tsx:212
+await in handleSave
+callCallback2 @ chunk-T2SWDQEL.js?v=97818aa5:3674
+invokeGuardedCallbackDev @ chunk-T2SWDQEL.js?v=97818aa5:3699
+invokeGuardedCallback @ chunk-T2SWDQEL.js?v=97818aa5:3733
+invokeGuardedCallbackAndCatchFirstError @ chunk-T2SWDQEL.js?v=97818aa5:3736
+executeDispatch @ chunk-T2SWDQEL.js?v=97818aa5:7014
+processDispatchQueueItemsInOrder @ chunk-T2SWDQEL.js?v=97818aa5:7034
+processDispatchQueue @ chunk-T2SWDQEL.js?v=97818aa5:7043
+dispatchEventsForPlugins @ chunk-T2SWDQEL.js?v=97818aa5:7051
+(anonymous) @ chunk-T2SWDQEL.js?v=97818aa5:7174
+batchedUpdates$1 @ chunk-T2SWDQEL.js?v=97818aa5:18913
+batchedUpdates @ chunk-T2SWDQEL.js?v=97818aa5:3579
+dispatchEventForPluginEventSystem @ chunk-T2SWDQEL.js?v=97818aa5:7173
+dispatchEventWithEnableCapturePhaseSelectiveHydrationWithoutDiscreteEventReplay @ chunk-T2SWDQEL.js?v=97818aa5:5478
+dispatchEvent @ chunk-T2SWDQEL.js?v=97818aa5:5472
+dispatchDiscreteEvent @ chunk-T2SWDQEL.js?v=97818aa5:5449Understand this error
+api.ts:135  GET https://24c272a2-fb04-470b-acba-7128090eaf34-00-2s9ehzztzr3ux.kirk.replit.dev/api/properties/TKAE8/units 500 (Internal Server Error)
+getUnits @ api.ts:135
+fetchData @ Units.tsx:40
+await in fetchData
+(anonymous) @ Units.tsx:55
+commitHookEffectListMount @ chunk-T2SWDQEL.js?v=97818aa5:16915
+commitPassiveMountOnFiber @ chunk-T2SWDQEL.js?v=97818aa5:18156
+commitPassiveMountEffects_complete @ chunk-T2SWDQEL.js?v=97818aa5:18129
+commitPassiveMountEffects_begin @ chunk-T2SWDQEL.js?v=97818aa5:18119
+commitPassiveMountEffects @ chunk-T2SWDQEL.js?v=97818aa5:18109
+flushPassiveEffectsImpl @ chunk-T2SWDQEL.js?v=97818aa5:19490
+flushPassiveEffects @ chunk-T2SWDQEL.js?v=97818aa5:19447
+(anonymous) @ chunk-T2SWDQEL.js?v=97818aa5:19328
+workLoop @ chunk-T2SWDQEL.js?v=97818aa5:197
+flushWork @ chunk-T2SWDQEL.js?v=97818aa5:176
+performWorkUntilDeadline @ chunk-T2SWDQEL.js?v=97818aa5:384Understand this error
+api.ts:135  GET https://24c272a2-fb04-470b-acba-7128090eaf34-00-2s9ehzztzr3ux.kirk.replit.dev/api/properties/TKAE8/units 500 (Internal Server Error)
+getUnits @ api.ts:135
+fetchData @ Units.tsx:40
+await in fetchData
+(anonymous) @ Units.tsx:55
+commitHookEffectListMount @ chunk-T2SWDQEL.js?v=97818aa5:16915
+commitPassiveMountOnFiber @ chunk-T2SWDQEL.js?v=97818aa5:18156
+commitPassiveMountEffects_complete @ chunk-T2SWDQEL.js?v=97818aa5:18129
+commitPassiveMountEffects_begin @ chunk-T2SWDQEL.js?v=97818aa5:18119
+commitPassiveMountEffects @ chunk-T2SWDQEL.js?v=97818aa5:18109
+flushPassiveEffectsImpl @ chunk-T2SWDQEL.js?v=97818aa5:19490
+flushPassiveEffects @ chunk-T2SWDQEL.js?v=97818aa5:19447
+(anonymous) @ chunk-T2SWDQEL.js?v=97818aa5:19328
+workLoop @ chunk-T2SWDQEL.js?v=97818aa5:197
+flushWork @ chunk-T2SWDQEL.js?v=97818aa5:176
+performWorkUntilDeadline @ chunk-T2SWDQEL.js?v=97818aa5:384Understand this error
+api.ts:135  GET https://24c272a2-fb04-470b-acba-7128090eaf34-00-2s9ehzztzr3ux.kirk.replit.dev/api/properties/TKAE8/units 500 (Internal Server Error)
+getUnits @ api.ts:135
+fetchData @ Units.tsx:40
+await in fetchData
+(anonymous) @ Units.tsx:55
+commitHookEffectListMount @ chunk-T2SWDQEL.js?v=97818aa5:16915
+commitPassiveMountOnFiber @ chunk-T2SWDQEL.js?v=97818aa5:18156
+commitPassiveMountEffects_complete @ chunk-T2SWDQEL.js?v=97818aa5:18129
+commitPassiveMountEffects_begin @ chunk-T2SWDQEL.js?v=97818aa5:18119
+commitPassiveMountEffects @ chunk-T2SWDQEL.js?v=97818aa5:18109
+flushPassiveEffectsImpl @ chunk-T2SWDQEL.js?v=97818aa5:19490
+flushPassiveEffects @ chunk-T2SWDQEL.js?v=97818aa5:19447
+(anonymous) @ chunk-T2SWDQEL.js?v=97818aa5:19328
+workLoop @ chunk-T2SWDQEL.js?v=97818aa5:197
+flushWork @ chunk-T2SWDQEL.js?v=97818aa5:176
+performWorkUntilDeadline @ chunk-T2SWDQEL.js?v=97818aa5:384Understand this error
+api.ts:135  GET https://24c272a2-fb04-470b-acba-7128090eaf34-00-2s9ehzztzr3ux.kirk.replit.dev/api/properties/TKAE8/units 500 (Internal Server Error)
+getUnits @ api.ts:135
+fetchData @ Units.tsx:40
+await in fetchData
+(anonymous) @ Units.tsx:55
+commitHookEffectListMount @ chunk-T2SWDQEL.js?v=97818aa5:16915
+commitPassiveMountOnFiber @ chunk-T2SWDQEL.js?v=97818aa5:18156
+commitPassiveMountEffects_complete @ chunk-T2SWDQEL.js?v=97818aa5:18129
+commitPassiveMountEffects_begin @ chunk-T2SWDQEL.js?v=97818aa5:18119
+commitPassiveMountEffects @ chunk-T2SWDQEL.js?v=97818aa5:18109
+flushPassiveEffectsImpl @ chunk-T2SWDQEL.js?v=97818aa5:19490
+flushPassiveEffects @ chunk-T2SWDQEL.js?v=97818aa5:19447
+(anonymous) @ chunk-T2SWDQEL.js?v=97818aa5:19328
+workLoop @ chunk-T2SWDQEL.js?v=97818aa5:197
+flushWork @ chunk-T2SWDQEL.js?v=97818aa5:176
+performWorkUntilDeadline @ chunk-T2SWDQEL.js?v=97818aa5:384Understand this error
+api.ts:135  GET https://24c272a2-fb04-470b-acba-7128090eaf34-00-2s9ehzztzr3ux.kirk.replit.dev/api/properties/TKAE8/units 500 (Internal Server Error)
+getUnits @ api.ts:135
+fetchData @ Rates.tsx:40
+await in fetchData
+(anonymous) @ Rates.tsx:117
+commitHookEffectListMount @ chunk-T2SWDQEL.js?v=97818aa5:16915
+commitPassiveMountOnFiber @ chunk-T2SWDQEL.js?v=97818aa5:18156
+commitPassiveMountEffects_complete @ chunk-T2SWDQEL.js?v=97818aa5:18129
+commitPassiveMountEffects_begin @ chunk-T2SWDQEL.js?v=97818aa5:18119
+commitPassiveMountEffects @ chunk-T2SWDQEL.js?v=97818aa5:18109
+flushPassiveEffectsImpl @ chunk-T2SWDQEL.js?v=97818aa5:19490
+flushPassiveEffects @ chunk-T2SWDQEL.js?v=97818aa5:19447
+(anonymous) @ chunk-T2SWDQEL.js?v=97818aa5:19328
+workLoop @ chunk-T2SWDQEL.js?v=97818aa5:197
+flushWork @ chunk-T2SWDQEL.js?v=97818aa5:176
+performWorkUntilDeadline @ chunk-T2SWDQEL.js?v=97818aa5:384Understand this error
+api.ts:135  GET https://24c272a2-fb04-470b-acba-7128090eaf34-00-2s9ehzztzr3ux.kirk.replit.dev/api/properties/TKAE8/units 500 (Internal Server Error)
+getUnits @ api.ts:135
+fetchData @ Rates.tsx:40
+await in fetchData
+(anonymous) @ Rates.tsx:117
+commitHookEffectListMount @ chunk-T2SWDQEL.js?v=97818aa5:16915
+commitPassiveMountOnFiber @ chunk-T2SWDQEL.js?v=97818aa5:18156
+commitPassiveMountEffects_complete @ chunk-T2SWDQEL.js?v=97818aa5:18129
+commitPassiveMountEffects_begin @ chunk-T2SWDQEL.js?v=97818aa5:18119
+commitPassiveMountEffects @ chunk-T2SWDQEL.js?v=97818aa5:18109
+flushPassiveEffectsImpl @ chunk-T2SWDQEL.js?v=97818aa5:19490
+flushPassiveEffects @ chunk-T2SWDQEL.js?v=97818aa5:19447
+(anonymous) @ chunk-T2SWDQEL.js?v=97818aa5:19328
+workLoop @ chunk-T2SWDQEL.js?v=97818aa5:197
+flushWork @ chunk-T2SWDQEL.js?v=97818aa5:176
+performWorkUntilDeadline @ chunk-T2SWDQEL.js?v=97818aa5:384Understand this error
+CalendarSync.tsx:43  GET https://24c272a2-fb04-470b-acba-7128090eaf34-00-2s9ehzztzr3ux.kirk.replit.dev/api/properties/units/1 404 (Not Found)
+fetchCalendar @ CalendarSync.tsx:43
+await in fetchCalendar
+(anonymous) @ CalendarSync.tsx:78
+commitHookEffectListMount @ chunk-T2SWDQEL.js?v=97818aa5:16915
+commitPassiveMountOnFiber @ chunk-T2SWDQEL.js?v=97818aa5:18156
+commitPassiveMountEffects_complete @ chunk-T2SWDQEL.js?v=97818aa5:18129
+commitPassiveMountEffects_begin @ chunk-T2SWDQEL.js?v=97818aa5:18119
+commitPassiveMountEffects @ chunk-T2SWDQEL.js?v=97818aa5:18109
+flushPassiveEffectsImpl @ chunk-T2SWDQEL.js?v=97818aa5:19490
+flushPassiveEffects @ chunk-T2SWDQEL.js?v=97818aa5:19447
+(anonymous) @ chunk-T2SWDQEL.js?v=97818aa5:19328
+workLoop @ chunk-T2SWDQEL.js?v=97818aa5:197
+flushWork @ chunk-T2SWDQEL.js?v=97818aa5:176
+performWorkUntilDeadline @ chunk-T2SWDQEL.js?v=97818aa5:384Understand this error
+api.ts:135  GET https://24c272a2-fb04-470b-acba-7128090eaf34-00-2s9ehzztzr3ux.kirk.replit.dev/api/properties/TKAE8/units 500 (Internal Server Error)
+getUnits @ api.ts:135
+fetchData @ Rates.tsx:40
+await in fetchData
+(anonymous) @ Rates.tsx:117
+commitHookEffectListMount @ chunk-T2SWDQEL.js?v=97818aa5:16915
+commitPassiveMountOnFiber @ chunk-T2SWDQEL.js?v=97818aa5:18156
+commitPassiveMountEffects_complete @ chunk-T2SWDQEL.js?v=97818aa5:18129
+commitPassiveMountEffects_begin @ chunk-T2SWDQEL.js?v=97818aa5:18119
+commitPassiveMountEffects @ chunk-T2SWDQEL.js?v=97818aa5:18109
+flushPassiveEffectsImpl @ chunk-T2SWDQEL.js?v=97818aa5:19490
+flushPassiveEffects @ chunk-T2SWDQEL.js?v=97818aa5:19447
+performSyncWorkOnRoot @ chunk-T2SWDQEL.js?v=97818aa5:18868
+flushSyncCallbacks @ chunk-T2SWDQEL.js?v=97818aa5:9119
+commitRootImpl @ chunk-T2SWDQEL.js?v=97818aa5:19432
+commitRoot @ chunk-T2SWDQEL.js?v=97818aa5:19277
+finishConcurrentRender @ chunk-T2SWDQEL.js?v=97818aa5:18805
+performConcurrentWorkOnRoot @ chunk-T2SWDQEL.js?v=97818aa5:18718
+workLoop @ chunk-T2SWDQEL.js?v=97818aa5:197
+flushWork @ chunk-T2SWDQEL.js?v=97818aa5:176
+performWorkUntilDeadline @ chunk-T2SWDQEL.js?v=97818aa5:384Understand this error
+api.ts:135  GET https://24c272a2-fb04-470b-acba-7128090eaf34-00-2s9ehzztzr3ux.kirk.replit.dev/api/properties/TKAE8/units 500 (Internal Server Error)
+getUnits @ api.ts:135
+fetchData @ Rates.tsx:40
+await in fetchData
+(anonymous) @ Rates.tsx:117
+commitHookEffectListMount @ chunk-T2SWDQEL.js?v=97818aa5:16915
+commitPassiveMountOnFiber @ chunk-T2SWDQEL.js?v=97818aa5:18156
+commitPassiveMountEffects_complete @ chunk-T2SWDQEL.js?v=97818aa5:18129
+commitPassiveMountEffects_begin @ chunk-T2SWDQEL.js?v=97818aa5:18119
+commitPassiveMountEffects @ chunk-T2SWDQEL.js?v=97818aa5:18109
+flushPassiveEffectsImpl @ chunk-T2SWDQEL.js?v=97818aa5:19490
+flushPassiveEffects @ chunk-T2SWDQEL.js?v=97818aa5:19447
+(anonymous) @ chunk-T2SWDQEL.js?v=97818aa5:19328
+workLoop @ chunk-T2SWDQEL.js?v=97818aa5:197
+flushWork @ chunk-T2SWDQEL.js?v=97818aa5:176
+performWorkUntilDeadline @ chunk-T2SWDQEL.js?v=97818aa5:384Understand this error

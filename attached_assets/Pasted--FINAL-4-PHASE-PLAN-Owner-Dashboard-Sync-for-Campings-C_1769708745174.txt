@@ -1,0 +1,186 @@
+# ✅ FINAL 4-PHASE PLAN
+
+## Owner Dashboard Sync for **Campings & Cottages**
+
+(**Villas must remain untouched**)
+
+---
+
+## PHASE 1: UNIT AWARENESS IN OWNER DASHBOARD (FOUNDATION)
+
+### Goal
+
+Make the Owner Dashboard fully **unit-aware** for `campings_cottages`, matching Admin + Public flow.
+
+### Tasks
+
+* Detect property category:
+
+  * If `villa` → keep owner dashboard **exactly as-is**
+  * If `campings_cottages` → enable unit-based mode
+
+* Add **Unit Selector Dropdown** (required in):
+
+  * Owner Dashboard main calendar page
+  * Rates / Pricing page (if separate)
+
+* Unit selector behavior:
+
+  * Lists **all units** of the property (Tent, AC Cottage, Glamping, etc.)
+  * Selecting a unit **reloads all data**:
+
+    * Calendar
+    * Prices
+    * Available / total persons capacity
+
+### DO NOT
+
+* Touch villa owner dashboard logic
+* Show property-level calendar for campings_cottages
+
+### Output
+
+* Owner dashboard can switch between units
+* Calendar becomes unit-scoped (read-only sync test)
+
+---
+
+## PHASE 2: ALL UNITS MANAGEMENT (OWNER VIEW)
+
+### Goal
+
+Give owners full visibility and control over **all units**, same as Admin.
+
+### Tasks
+
+* Add **“All Units” section** in Owner Dashboard:
+
+  * List all units with:
+
+    * Unit Name
+    * Available / Total persons capacity
+    * Price per person
+
+* Enable **Edit Unit** (same fields as Admin):
+
+  * Unit Name
+  * Available / Total persons capacity
+  * Amenities
+  * Unit Gallery
+
+* Capacity UI:
+
+  * Format: `available / total persons`
+  * Available → green
+  * Total → orange
+
+### DO NOT
+
+* Add Activities / Policies / Highlights at unit level
+* Allow owners to edit villas via this logic
+
+### Output
+
+* Owners can manage all units visually
+* Data matches Admin panel exactly
+
+---
+
+## PHASE 3: PER-UNIT CALENDAR & PRICING CONTROL
+
+### Goal
+
+Ensure owners can fully manage **pricing + availability per unit**, not per property.
+
+### Tasks
+
+* Bind existing **CalendarSync** to:
+
+  * `unit_id` (not property_id)
+
+* Owner can manage **per unit**:
+
+  * Weekday prices
+  * Weekend prices
+  * Special day prices
+  * Block / unblock availability
+  * Available persons count per date
+
+* Calendar rules:
+
+  * Reuse existing calendar logic
+  * No new calendar component
+  * Same pricing behavior as Admin
+
+### DO NOT
+
+* Create a second calendar system
+* Allow owners to change villa pricing logic
+
+### Output
+
+* Unit-level calendar fully editable by owner
+* Pricing & availability reflect instantly on public site
+
+---
+
+## PHASE 4: UNIVERSAL PROPERTY INFO (SHARED ACROSS UNITS)
+
+### Goal
+
+Allow owners to manage **property-level universal info**, shared by all units.
+
+### Tasks
+
+* Add **Property Info Editor** (campings_cottages only):
+
+  * Activities
+  * What you’ll love
+  * Privacy policy
+  * Property images (gallery)
+
+* Changes apply to:
+
+  * All units
+  * Public property details page
+
+### DO NOT
+
+* Duplicate this info per unit
+* Allow editing for villas
+
+### Output
+
+* Owners can update universal info once
+* Public site reflects changes across all units
+
+---
+
+## NON-NEGOTIABLE RULES
+
+* Villas must remain **100% untouched**
+* Unit logic applies **ONLY** to `campings_cottages`
+* Owner Dashboard must mirror:
+
+  * Admin Panel
+  * Public Website
+* Reuse existing:
+
+  * Calendar logic
+  * Pricing rules
+* No breaking changes to bookings
+
+---
+
+### ✅ FINAL RESULT
+
+Admin, Owner, and Public Website are now **fully in sync** for:
+
+* Units
+* Calendar
+* Pricing
+* Capacity
+* Universal property info
+
+---
+

@@ -1,0 +1,193 @@
+Good — this Chrome message actually **confirms the real problem** 👍
+Let’s cut through the noise and fix it **step-by-step**, no guessing.
+
+---
+
+## ❌ WHAT THIS ERROR REALLY MEANS (IMPORTANT)
+
+```
+ERR_CONNECTION_REFUSED
+```
+
+This is **NOT**:
+
+* ❌ Internet issue
+* ❌ Firewall issue
+* ❌ Proxy issue
+* ❌ Paytm issue
+
+👉 **It ONLY means one thing**:
+
+> **There is NO server running on the port Chrome is trying to connect to.**
+
+Chrome is knocking on the door.
+**Nobody is home.**
+
+---
+
+## 🎯 WHY THIS IS HAPPENING IN YOUR PROJECT
+
+You are running **React + Node (Express)**.
+
+Paytm is redirecting the browser to:
+
+```
+http://localhost:<PORT>/payment/paytm/callback
+```
+
+But:
+
+* Express server is **not running**
+* OR running on a **different port**
+* OR route does not exist
+* OR Bolt preview ≠ localhost
+
+---
+
+## ✅ DO THIS EXACTLY (NO SKIPPING)
+
+---
+
+## ✅ STEP 1: VERIFY BACKEND SERVER IS RUNNING
+
+Open terminal in **backend folder** and run:
+
+```bash
+npm run dev
+```
+
+or
+
+```bash
+npm start
+```
+
+or
+
+```bash
+node index.js
+```
+
+### You MUST see something like:
+
+```
+Server running on port 5000
+```
+
+or
+
+```
+Listening on port 3000
+```
+
+❗ If you see nothing → backend is NOT running.
+
+---
+
+## ✅ STEP 2: CONFIRM WHICH PORT EXPRESS IS USING
+
+Open your backend entry file (`index.js`, `server.js`, `app.js`):
+
+```js
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
+```
+
+👉 Note the **exact port number**
+
+---
+
+## ✅ STEP 3: TEST SERVER MANUALLY (MOST IMPORTANT)
+
+Open browser and visit:
+
+```
+http://localhost:5000
+```
+
+(or whatever port you found)
+
+### Results:
+
+| Result                     | Meaning                         |
+| -------------------------- | ------------------------------- |
+| Page loads / JSON response | ✅ Server is running             |
+| ERR_CONNECTION_REFUSED     | ❌ Server NOT running            |
+| 404                        | ✅ Server running, route missing |
+
+---
+
+## ✅ STEP 4: TEST PAYTM CALLBACK ROUTE DIRECTLY
+
+Now open:
+
+```
+http://localhost:5000/payment/paytm/callback
+```
+
+Expected:
+
+* 404 or JSON error → **GOOD**
+* ERR_CONNECTION_REFUSED → **BAD (server down)**
+
+---
+
+## ✅ STEP 5: FIX CALLBACK URL (CRITICAL)
+
+Your `.env` **MUST MATCH THE BACKEND PORT**
+
+### Example:
+
+If server runs on `5000`:
+
+```env
+PAYTM_CALLBACK_URL=http://localhost:5000/payment/paytm/callback
+```
+
+If server runs on `3000`:
+
+```env
+PAYTM_CALLBACK_URL=http://localhost:3000/payment/paytm/callback
+```
+
+Mismatch = guaranteed failure.
+
+---
+
+## ⚠️ VERY IMPORTANT (BOLT / PREVIEW ISSUE)
+
+If you are using **Bolt preview**, then:
+
+❌ `localhost` DOES NOT WORK
+
+You must use the **public preview URL**, for example:
+
+```
+https://abcd-5000.preview.bolt.run/payment/paytm/callback
+```
+
+👉 Paytm cannot redirect to your local machine if preview is cloud-hosted.
+
+---
+
+## 🔥 90% LIKELY ROOT CAUSE (FROM YOUR MESSAGES)
+
+One of these:
+
+1. Backend server not started
+2. Port mismatch (React 5173 vs Express 5000)
+3. Using `localhost` instead of Bolt preview URL
+
+---
+
+## 🧠 FINAL QUICK CHECK (ANSWER THESE)
+
+Reply with:
+1️⃣ **Which command are you running to start backend?**
+2️⃣ **What exact port is printed in terminal?**
+3️⃣ **Are you using Bolt preview URL or local machine?**
+
+I’ll give you the **exact final CALLBACK_URL** and your Paytm flow will start working immediately.

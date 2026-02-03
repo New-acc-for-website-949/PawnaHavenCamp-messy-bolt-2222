@@ -1,0 +1,152 @@
+## ✅ ARCHITECTURE REFACTOR DIRECTIVE (CTO DECISION)
+
+After reviewing the current codebase and recent issues (cross-contamination between Villas and Campings_Cottages logic), we are **officially approving an architecture refactor** before launch.
+
+---
+
+## 🔹 KEY DECISIONS (FINAL)
+
+### 1️⃣ Separate Backend Controllers by Property Type
+
+**YES — This is mandatory**
+
+Current issue:
+
+* `propertyController.js` is 1000+ lines
+* Heavy use of `if (category === 'villa')` logic
+* Changes in one flow break the other
+
+### New Controller Structure (MANDATORY)
+
+```txt
+backend/controllers/
+├── shared/
+│   └── basePropertyController.js   // shared read-only/common logic
+├── villa/
+│   └── villaController.js          // villas ONLY
+└── camping/
+    └── camping_CottagesController.js        // campings_cottages ONLY
+```
+
+**Rules**
+
+* `villaController.js` must NEVER contain unit logic
+* `camping_CottagesController.js` must NEVER contain villa logic
+* No category conditionals inside controllers
+
+---
+
+### 2️⃣ Unique `calendar_id` for Every Calendar Row
+
+**YES — Required**
+
+Current:
+
+* `availability_calendar`: property_id + date
+* `unit_calendar`: unit_id + date
+
+### Change Required
+
+* Add a **unique `calendar_id` (UUID or SERIAL)** to both tables
+
+**Benefits**
+
+* Cleaner APIs (single ID instead of composite keys)
+* Easier debugging & tracking
+* Enables future calendar sync, exports, and audit logs
+
+---
+
+### 3️⃣ Separate API Routes for Villas & Campings
+
+**YES — Enforced**
+
+### New Route Structure
+
+```txt
+backend/routes/
+├── villa.js      → /api/villa/*
+└── camping_Cottage.js    → /api/camping_Cottages/*
+```
+
+**Rules**
+
+* No mixed routes
+* No category checks inside route handlers
+* Each dashboard talks ONLY to its own API namespace
+
+---
+
+## 🔹 5 CRITICAL PRE-LAUNCH CHANGES
+
+| # | Change                                | Reason                         |
+| - | ------------------------------------- | ------------------------------ |
+| 1 | Separate controllers by property type | Prevent logic bleed            |
+| 2 | Unique calendar_id                    | Clean APIs & tracking          |
+| 3 | Separate API namespaces               | Clear ownership & stability    |
+| 4 | Add structured error handling         | Debug faster, safer production |
+| 5 | Input validation middleware           | Prevent bad data entering DB   |
+
+---
+
+## 🔹 ERROR HANDLING REQUIREMENT
+
+Replace generic `500 Internal Server Error` with:
+
+* 400 → Validation errors
+* 404 → Not found
+* 409 → Booking / availability conflicts
+* 500 → True server errors
+
+---
+
+## 🔹 INPUT VALIDATION (MANDATORY)
+
+Add validation middleware:
+
+* Property ID
+* Unit ID
+* Dates
+* Capacity values
+* Prices
+* Booking payloads
+
+**Validation must run BEFORE controller logic**
+
+---
+
+## 🔹 QUICK WIN ARCHITECTURE (FINAL TARGET)
+
+```txt
+backend/
+├── controllers/
+│   ├── shared/
+│   │   └── basePropertyController.js
+│   ├── villa/
+│   │   └── villaController.js
+│   └── camping/
+│       └── camping_CottagesController.js
+├── routes/
+│   ├── villa.js
+│   └── camping_Cottages.js
+├── middlewares/
+│   ├── validateInput.js
+│   └── errorHandler.js
+```
+
+---
+
+## 🚫 NON-NEGOTIABLE RULES
+
+* Villas logic must remain 100% untouched by camping changes
+* Campings_Cottages must remain unit-based
+* No category-based branching inside controllers
+* Any shared logic goes ONLY into `shared/`
+
+---
+
+**Proceed step-by-step.
+Start with controller & route separation first.
+Wait for approval after structural refactor before touching business logic.**
+
+---

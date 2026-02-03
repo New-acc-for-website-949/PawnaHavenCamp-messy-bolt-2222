@@ -1,0 +1,153 @@
+# ✅ COMMAND: PROCEED WITH STEP 2 — OTP SYSTEM & PUBLIC ENDPOINTS
+
+You are approved to proceed with **STEP 2** only.
+
+---
+
+## 🔹 SCOPE OF STEP 2 (STRICT)
+
+You may implement **ONLY** the following:
+
+### 1️⃣ OTP SYSTEM (CORE PRIORITY)
+
+Implement OTP logic with **all rules below enforced**.
+
+#### OTP Rules (NON-NEGOTIABLE)
+
+* OTP length: **6 digits**
+* OTP expiry: **5 minutes**
+* OTP resend limit:
+
+  * **Max 4 OTPs per mobile per purpose per 60 minutes**
+* Purpose must be **mandatory**:
+
+  * `register`
+  * `login`
+
+#### OTP Storage Rules
+
+* Store OTP with:
+
+  * mobile_number
+  * otp_code
+  * purpose
+  * expires_at
+  * attempts
+* OTP verification must:
+
+  * Match **mobile + otp + purpose**
+  * Reject expired OTP
+  * Reject after **5 failed attempts**
+* On success:
+
+  * OTP must be **deleted or permanently invalidated**
+
+---
+
+### 2️⃣ OTP APIs TO IMPLEMENT
+
+#### `POST /api/referrals/request-otp`
+
+```
+{
+  "mobile": "9999999999",
+  "purpose": "register" | "login"
+}
+```
+
+Validation:
+
+* Enforce rate limit
+* Reject invalid purpose
+* Reject if mobile is blocked (if user exists)
+
+Response:
+
+* Generic success message (no OTP leaks)
+
+---
+
+#### `POST /api/referrals/verify-otp`
+
+```
+{
+  "mobile": "9999999999",
+  "otp": "123456",
+  "purpose": "register" | "login"
+}
+```
+
+On success:
+
+* Issue JWT (24h expiry)
+* Include referral_user_id in token if user exists
+* DO NOT auto-register user here
+
+---
+
+### 3️⃣ PUBLIC TOP EARNERS API
+
+#### `GET /api/referrals/top-earners?period=month|all`
+
+Rules:
+
+* Only include users where:
+
+  * referral_users.status = 'active'
+  * transactions.status = 'completed'
+* Ignore withdrawals for monthly leaderboard
+* Limit: **Top 20**
+* Return:
+
+```
+[
+  {
+    "username": "john_doe",
+    "earnings": 12500
+  }
+]
+```
+
+⚠️ Do NOT expose:
+
+* mobile numbers
+* referral codes
+* user IDs
+
+---
+
+## 🧱 ARCHITECTURE RULES (REPEAT)
+
+* Routes: no logic
+* Controllers: request/response only
+* Services: ALL validations & rules
+* Repositories: SQL only
+* Use existing db.js
+* No frontend changes
+
+---
+
+## ⛔ DO NOT DO IN STEP 2
+
+❌ Do NOT implement register/login APIs
+❌ Do NOT create dashboard API
+❌ Do NOT create withdrawal API
+❌ Do NOT auto-create referral users
+❌ Do NOT write admin logic
+
+---
+
+## ✅ STEP 2 COMPLETION CRITERIA
+
+Reply ONLY with:
+
+1. List of APIs implemented
+2. OTP rate-limit logic explanation
+3. Top earners query explanation
+4. Confirmation that OTP reuse is impossible
+
+After that, **STOP** and wait for my approval for Step 3.
+
+---
+
+Proceed with **STEP 2** now.
