@@ -44,12 +44,21 @@ export function BookingForm({
     nonVegPersons: 0,
     checkIn: undefined as Date | undefined,
     checkOut: undefined as Date | undefined,
+    referralCode: "",
   });
 
   const [isCheckInOpen, setIsCheckInOpen] = useState(false);
   const [isCheckOutOpen, setIsCheckOutOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [bookedDates, setBookedDates] = useState<string[]>([]);
+  const [referralValidation, setReferralValidation] = useState<{
+    valid: boolean;
+    error?: string;
+    message?: string;
+    discountPercentage?: number;
+    referralType?: string;
+  } | null>(null);
+  const [isValidatingReferral, setIsValidatingReferral] = useState(false);
 
   useEffect(() => {
     const fetchAvailability = async () => {
@@ -68,8 +77,53 @@ export function BookingForm({
 
   const [totalPrice, setTotalPrice] = useState(0);
   const [advanceAmount, setAdvanceAmount] = useState(0);
+  const [finalAdvance, setFinalAdvance] = useState(0);
 
   const isVilla = propertyCategory?.toLowerCase() === "villa";
+
+  const validateReferralCode = async (code: string) => {
+    if (!code || code.trim() === '') {
+      setReferralValidation(null);
+      return;
+    }
+
+    if (!formData.mobile) {
+      setReferralValidation({ valid: false, error: 'Please enter mobile number first' });
+      return;
+    }
+
+    setIsValidatingReferral(true);
+    try {
+      const response = await fetch('/api/referrals/validate-code', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          code: code.trim(),
+          guestPhone: formData.mobile,
+        }),
+      });
+
+      const result = await response.json();
+      setReferralValidation(result);
+    } catch (error) {
+      console.error('Error validating referral code:', error);
+      setReferralValidation({ valid: false, error: 'Failed to validate code' });
+    } finally {
+      setIsValidatingReferral(false);
+    }
+  };
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (formData.referralCode && formData.referralCode.trim() !== '') {
+        validateReferralCode(formData.referralCode);
+      }
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [formData.referralCode, formData.mobile]);
 
   useEffect(() => {
     let days = 1;
@@ -85,15 +139,20 @@ export function BookingForm({
     } else {
       const totalPersons = (formData.vegPersons || 0) + (formData.nonVegPersons || 0);
       total = totalPersons * pricePerPerson;
-      // Keep persons count in sync for other logic if needed
       if (formData.persons !== totalPersons) {
         setFormData(prev => ({ ...prev, persons: totalPersons }));
       }
     }
-    
+
     setTotalPrice(total);
-    setAdvanceAmount(Math.round(total * 0.3)); // 30% advance
-  }, [formData.persons, formData.vegPersons, formData.nonVegPersons, formData.checkIn, formData.checkOut, pricePerPerson, isVilla]);
+    const advance = Math.round(total * 0.3);
+    setAdvanceAmount(advance);
+
+    const discount = referralValidation?.valid && referralValidation.discountPercentage
+      ? Math.round(advance * (referralValidation.discountPercentage / 100))
+      : 0;
+    setFinalAdvance(advance - discount);
+  }, [formData.persons, formData.vegPersons, formData.nonVegPersons, formData.checkIn, formData.checkOut, pricePerPerson, isVilla, referralValidation]);
 
   const handleCheckInSelect = (date: Date | undefined) => {
     if (!date) return;
@@ -151,6 +210,7 @@ export function BookingForm({
         checkin_datetime: checkInDateTime.toISOString(),
         checkout_datetime: checkOutDateTime.toISOString(),
         advance_amount: advanceAmount,
+        referral_code: referralValidation?.valid ? formData.referralCode : null,
       };
 
       if (isVilla) {
@@ -357,13 +417,32 @@ export function BookingForm({
 
         <div className="grid gap-1.5">
           <Label htmlFor="referral">Referral Code (Optional)</Label>
-          <Input 
-            id="referral" 
-            placeholder="Enter code for 5% discount" 
-            value={(formData as any).referralCode || ""}
-            onChange={(e) => setFormData({ ...formData, referralCode: e.target.value } as any)}
-            className="h-11 border-primary/30 focus:border-primary"
-          />
+          <div className="relative">
+            <Input
+              id="referral"
+              placeholder="Enter code for discount"
+              value={formData.referralCode}
+              onChange={(e) => setFormData({ ...formData, referralCode: e.target.value.toUpperCase() })}
+              className={cn(
+                "h-11 border-primary/30 focus:border-primary",
+                referralValidation?.valid && "border-green-500",
+                referralValidation && !referralValidation.valid && "border-red-500"
+              )}
+            />
+            {isValidatingReferral && (
+              <span className="absolute right-3 top-3 text-xs text-muted-foreground">Validating...</span>
+            )}
+          </div>
+          {referralValidation?.valid && (
+            <p className="text-xs text-green-600 font-medium">
+              {referralValidation.message}
+            </p>
+          )}
+          {referralValidation && !referralValidation.valid && referralValidation.error && (
+            <p className="text-xs text-red-600 font-medium">
+              {referralValidation.error}
+            </p>
+          )}
         </div>
 
         <div className="bg-primary/5 p-2 rounded-lg border border-primary/10">
@@ -374,14 +453,29 @@ export function BookingForm({
         </div>
       </div>
 
-      <div className="bg-secondary/50 p-3 rounded-xl flex items-center justify-between">
-        <div>
-          <span className="text-xs font-medium block text-muted-foreground">Advance Payment (30%)</span>
-          <span className="text-lg font-bold text-primary">₹{advanceAmount}</span>
+      <div className="bg-secondary/50 p-3 rounded-xl space-y-2">
+        <div className="flex items-center justify-between">
+          <div>
+            <span className="text-xs font-medium block text-muted-foreground">Advance Payment (30%)</span>
+            {referralValidation?.valid && referralValidation.discountPercentage > 0 ? (
+              <div className="flex items-center gap-2">
+                <span className="text-sm line-through text-muted-foreground">₹{advanceAmount}</span>
+                <span className="text-lg font-bold text-primary">₹{finalAdvance}</span>
+              </div>
+            ) : (
+              <span className="text-lg font-bold text-primary">₹{advanceAmount}</span>
+            )}
+          </div>
+          <div className="text-right">
+            <span className="text-[10px] font-medium block text-muted-foreground">Total: ₹{totalPrice}</span>
+          </div>
         </div>
-        <div className="text-right">
-          <span className="text-[10px] font-medium block text-muted-foreground">Total: ₹{totalPrice}</span>
-        </div>
+        {referralValidation?.valid && referralValidation.discountPercentage > 0 && (
+          <div className="flex items-center justify-between pt-2 border-t border-primary/10">
+            <span className="text-xs text-green-600 font-medium">Referral Discount ({referralValidation.discountPercentage}%)</span>
+            <span className="text-xs text-green-600 font-bold">-₹{advanceAmount - finalAdvance}</span>
+          </div>
+        )}
       </div>
 
       <Button

@@ -1,5 +1,6 @@
 const ReferralRepository = require('../repositories/referralRepository');
 const QRCode = require('qrcode');
+const { calculateCommissionSplit } = require('../utils/commissionCalculator');
 
 const ReferralService = {
   async getTopEarners(period) {
@@ -37,6 +38,36 @@ const ReferralService = {
       referralCode,
       referralLink,
       referralQrCode
+    };
+  },
+
+  async validateReferralCode(code, guestPhone) {
+    if (!code || code.trim() === '') {
+      return { valid: false, error: 'Referral code is required' };
+    }
+
+    const validation = await ReferralRepository.validateReferralCode(code, guestPhone);
+
+    if (!validation.valid) {
+      return validation;
+    }
+
+    return {
+      valid: true,
+      referralUserId: validation.referralUserId,
+      referralCode: validation.referralCode,
+      referralType: validation.referralType,
+      username: validation.username,
+      discountPercentage: validation.referralType === 'STANDARD' ? 5 : 0,
+    };
+  },
+
+  async calculateReferralBenefit(advanceAmount, referralType) {
+    const commission = calculateCommissionSplit(advanceAmount, referralType);
+    return {
+      customerDiscount: commission.customerDiscount,
+      referrerEarning: commission.referrerCommission,
+      adminCommission: commission.adminCommission,
     };
   }
 };

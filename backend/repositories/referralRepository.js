@@ -44,6 +44,46 @@ const ReferralRepository = {
     const text = 'SELECT id, username, referral_code, status FROM referral_users WHERE id = $1';
     const res = await query(text, [id]);
     return res.rows[0];
+  },
+
+  async findByReferralCode(code) {
+    const text = `
+      SELECT id, username, referral_code, referral_type, status
+      FROM referral_users
+      WHERE UPPER(referral_code) = UPPER($1)
+    `;
+    const res = await query(text, [code]);
+    return res.rows[0];
+  },
+
+  async validateReferralCode(code, guestPhone) {
+    const text = `
+      SELECT id, username, referral_code, referral_type, status, mobile_number
+      FROM referral_users
+      WHERE UPPER(referral_code) = UPPER($1)
+    `;
+    const res = await query(text, [code]);
+    const user = res.rows[0];
+
+    if (!user) {
+      return { valid: false, error: 'Invalid referral code' };
+    }
+
+    if (user.status !== 'active') {
+      return { valid: false, error: 'This referral code is not active' };
+    }
+
+    if (user.mobile_number === guestPhone) {
+      return { valid: false, error: 'You cannot use your own referral code' };
+    }
+
+    return {
+      valid: true,
+      referralUserId: user.id,
+      referralCode: user.referral_code,
+      referralType: user.referral_type || 'STANDARD',
+      username: user.username,
+    };
   }
 };
 

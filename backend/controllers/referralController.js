@@ -36,6 +36,36 @@ const ReferralController = {
     } catch (error) {
       res.status(400).json({ error: error.message });
     }
+  },
+
+  async validateCode(req, res) {
+    try {
+      const { code, guestPhone } = req.body;
+
+      if (!code) {
+        return res.status(400).json({ valid: false, error: 'Referral code is required' });
+      }
+
+      const validation = await ReferralService.validateReferralCode(code, guestPhone || null);
+
+      if (!validation.valid) {
+        return res.status(200).json(validation);
+      }
+
+      return res.status(200).json({
+        valid: true,
+        referralCode: validation.referralCode,
+        referralType: validation.referralType,
+        username: validation.username,
+        discountPercentage: validation.discountPercentage,
+        message: validation.referralType === 'STANDARD'
+          ? `Valid code! You'll get 5% discount`
+          : `Valid code! Applied by ${validation.username}`,
+      });
+    } catch (error) {
+      console.error('Error validating referral code:', error);
+      res.status(500).json({ valid: false, error: 'Failed to validate referral code' });
+    }
   }
 };
 

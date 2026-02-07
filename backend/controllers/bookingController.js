@@ -1,5 +1,7 @@
 const { query } = require('../db');
 const { WhatsAppService } = require('../utils/whatsappService');
+const ReferralService = require('../services/referralService');
+const { calculateCommissionSplit } = require('../utils/commissionCalculator');
 
 const VALID_TRANSITIONS = {
   'PAYMENT_PENDING': ['PAYMENT_SUCCESS'],
@@ -76,6 +78,44 @@ const initiateBooking = async (req, res) => {
       return res.status(400).json({ error: validation.error });
     }
 
+    let referralData = {
+      referralCode: null,
+      referralUserId: null,
+      referralType: 'NONE',
+      adminCommission: 0,
+      referrerCommission: 0,
+      customerDiscount: 0,
+      commissionStatus: 'NONE',
+    };
+
+    if (bookingRequest.referral_code && bookingRequest.referral_code.trim() !== '') {
+      const referralValidation = await ReferralService.validateReferralCode(
+        bookingRequest.referral_code,
+        bookingRequest.guest_phone
+      );
+
+      if (referralValidation.valid) {
+        referralData.referralCode = referralValidation.referralCode;
+        referralData.referralUserId = referralValidation.referralUserId;
+        referralData.referralType = referralValidation.referralType;
+
+        const commission = calculateCommissionSplit(
+          bookingRequest.advance_amount,
+          referralValidation.referralType
+        );
+
+        referralData.adminCommission = commission.adminCommission;
+        referralData.referrerCommission = commission.referrerCommission;
+        referralData.customerDiscount = commission.customerDiscount;
+        referralData.commissionStatus = 'PENDING';
+      }
+    }
+
+    if (referralData.referralType === 'NONE') {
+      const commission = calculateCommissionSplit(bookingRequest.advance_amount, 'NONE');
+      referralData.adminCommission = commission.adminCommission;
+    }
+
     let insertQuery;
     let values;
 
@@ -87,8 +127,10 @@ const initiateBooking = async (req, res) => {
           checkin_datetime, checkout_datetime, advance_amount,
           persons, max_capacity,
           owner_name, map_link, property_address, total_amount,
+          referral_code, referral_user_id, referral_type,
+          admin_commission, referrer_commission, customer_discount, commission_status,
           payment_status, booking_status
-        ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, 'INITIATED', 'PAYMENT_PENDING')
+        ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, 'INITIATED', 'PAYMENT_PENDING')
         RETURNING *
       `;
       values = [
@@ -108,6 +150,13 @@ const initiateBooking = async (req, res) => {
         bookingRequest.map_link || null,
         bookingRequest.property_address || null,
         bookingRequest.total_amount || null,
+        referralData.referralCode,
+        referralData.referralUserId,
+        referralData.referralType,
+        referralData.adminCommission,
+        referralData.referrerCommission,
+        referralData.customerDiscount,
+        referralData.commissionStatus,
       ];
     } else {
       insertQuery = `
@@ -117,8 +166,10 @@ const initiateBooking = async (req, res) => {
           checkin_datetime, checkout_datetime, advance_amount,
           veg_guest_count, nonveg_guest_count,
           owner_name, map_link, property_address, total_amount,
+          referral_code, referral_user_id, referral_type,
+          admin_commission, referrer_commission, customer_discount, commission_status,
           payment_status, booking_status
-        ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, 'INITIATED', 'PAYMENT_PENDING')
+        ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, 'INITIATED', 'PAYMENT_PENDING')
         RETURNING *
       `;
       values = [
@@ -138,6 +189,13 @@ const initiateBooking = async (req, res) => {
         bookingRequest.map_link || null,
         bookingRequest.property_address || null,
         bookingRequest.total_amount || null,
+        referralData.referralCode,
+        referralData.referralUserId,
+        referralData.referralType,
+        referralData.adminCommission,
+        referralData.referrerCommission,
+        referralData.customerDiscount,
+        referralData.commissionStatus,
       ];
     }
 
@@ -146,6 +204,12 @@ const initiateBooking = async (req, res) => {
     return res.status(201).json({
       success: true,
       booking: result.rows[0],
+      commissionBreakdown: {
+        adminCommission: referralData.adminCommission,
+        referrerCommission: referralData.referrerCommission,
+        customerDiscount: referralData.customerDiscount,
+        finalAdvance: bookingRequest.advance_amount - referralData.customerDiscount,
+      },
       message: 'Booking initiated successfully'
     });
   } catch (error) {
