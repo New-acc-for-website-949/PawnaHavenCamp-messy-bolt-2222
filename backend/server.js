@@ -13,8 +13,12 @@ const bookingRoutes = require('./routes/bookings');
 const paymentRoutes = require('./routes/payments');
 const referralRoutes = require('./routes/referralRoutes');
 const whatsappWebhookRoutes = require('./routes/whatsappWebhook');
+const refundRoutes = require('./routes/refunds');
+const commissionRoutes = require('./routes/commissions');
+const monitoringRoutes = require('./routes/monitoring');
 const { pool } = require('./db');
 const { errorMiddleware } = require('./middleware/errorHandler');
+const { startMonitoring } = require('./services/monitoringService');
 
 const app = express();
 const PORT = process.env.PORT || 5001;
@@ -71,6 +75,9 @@ app.use('/api/payments', paymentRoutes);
 app.use('/api/etickets', eticketRoutes);
 app.use('/api/referrals', referralRoutes);
 app.use('/api/whatsapp', whatsappWebhookRoutes);
+app.use('/api/refunds', refundRoutes);
+app.use('/api/commissions', commissionRoutes);
+app.use('/api/monitoring', monitoringRoutes);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
@@ -162,6 +169,8 @@ const server = app.listen(PORT, '0.0.0.0', () => {
   console.log(`API Base URL: http://localhost:${PORT}/api`);
   console.log(`Admin Panel: http://localhost:${PORT}/admin`);
   console.log(`=================================\n`);
+
+  startMonitoring(5);
 });
 
 // For Replit to handle proxying

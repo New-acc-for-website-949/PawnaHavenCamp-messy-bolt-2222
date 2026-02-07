@@ -1,6 +1,8 @@
 const { query } = require('../db');
 const { WhatsAppService } = require('../utils/whatsappService');
 const { verifyActionToken } = require('../utils/actionTokens');
+const { generateTicketForBooking } = require('../services/ticketService');
+const { initiateRefundRequest } = require('../services/refundService');
 
 const whatsappWebhookVerify = (req, res) => {
   try {
@@ -135,10 +137,13 @@ const handleOwnerConfirmation = async (booking, whatsapp) => {
     });
     const persons = booking.persons || ((booking.veg_guest_count || 0) + (booking.nonveg_guest_count || 0));
 
+    const ticketResult = await generateTicketForBooking(booking.booking_id);
+
     const ownerConfirmMsg = `✅ *Booking Confirmed Successfully*\n\n`;
-    await whatsapp.sendTextMessage(booking.owner_phone, ownerConfirmMsg + `Booking ID: ${booking.booking_id}\nGuest: ${booking.guest_name}`);
+    await whatsapp.sendTextMessage(booking.owner_phone, ownerConfirmMsg + `Booking ID: ${booking.booking_id}\nGuest: ${booking.guest_name}\n\nE-Ticket has been sent to the customer.`);
 
     let customerTicketMsg = `🎉 *Booking Confirmed!*\n\n`;
+    customerTicketMsg += `🎫 *Your E-Ticket is Ready*\n\n`;
     customerTicketMsg += `Booking ID: ${booking.booking_id}\n`;
     customerTicketMsg += `Property: ${booking.property_name}\n`;
     customerTicketMsg += `Guest: ${booking.guest_name}\n`;
@@ -146,8 +151,13 @@ const handleOwnerConfirmation = async (booking, whatsapp) => {
     customerTicketMsg += `Check-out: ${checkoutDate}\n`;
     customerTicketMsg += `Persons: ${persons}\n`;
     customerTicketMsg += `Advance Paid: ₹${booking.advance_amount}\n\n`;
-    customerTicketMsg += `Your e-ticket is being generated...\n`;
-    customerTicketMsg += `View your ticket: ${process.env.FRONTEND_URL || 'http://localhost:5000'}/ticket?booking_id=${booking.booking_id}`;
+    customerTicketMsg += `📱 *View Your E-Ticket*\n`;
+    customerTicketMsg += `${ticketResult.ticketUrl}\n\n`;
+    customerTicketMsg += `💡 *Check-in Instructions*\n`;
+    customerTicketMsg += `- Show this ticket at the property\n`;
+    customerTicketMsg += `- Carry a valid ID proof\n`;
+    customerTicketMsg += `- Contact owner if needed: ${booking.owner_phone}\n\n`;
+    customerTicketMsg += `Have a wonderful stay! 🏡`;
 
     await whatsapp.sendTextMessage(booking.guest_phone, customerTicketMsg);
 
@@ -164,7 +174,7 @@ const handleOwnerConfirmation = async (booking, whatsapp) => {
       adminConfirmMsg += `Admin Commission: ₹${booking.admin_commission}\n\n`;
     }
 
-    adminConfirmMsg += `Ticket Link: ${process.env.FRONTEND_URL || 'http://localhost:5000'}/ticket?booking_id=${booking.booking_id}`;
+    adminConfirmMsg += `🎫 Ticket Link: ${ticketResult.ticketUrl}`;
 
     await whatsapp.sendTextMessage(booking.admin_phone, adminConfirmMsg);
 
@@ -198,8 +208,10 @@ const handleOwnerCancellation = async (booking, whatsapp) => {
       );
     }
 
+    await initiateRefundRequest(booking.booking_id, 'Owner cancelled booking due to unavailability');
+
     const ownerCancelMsg = `❌ *Booking Cancelled*\n\n`;
-    await whatsapp.sendTextMessage(booking.owner_phone, ownerCancelMsg + `Booking ID: ${booking.booking_id}\nRefund process will be initiated.`);
+    await whatsapp.sendTextMessage(booking.owner_phone, ownerCancelMsg + `Booking ID: ${booking.booking_id}\nRefund request has been created for admin processing.`);
 
     let customerRefundMsg = `❌ *Booking Cancelled*\n\n`;
     customerRefundMsg += `Booking ID: ${booking.booking_id}\n`;
