@@ -1,6 +1,7 @@
 const { query } = require('../db');
 const { PaytmChecksum } = require('../utils/paytmChecksum');
 const { WhatsAppService } = require('../utils/whatsappService');
+const { createOwnerActionToken } = require('../utils/actionTokens');
 
 function generatePaytmOrderId() {
   const timestamp = Date.now();
@@ -193,11 +194,6 @@ const paytmCallback = async (req, res) => {
     if (status === 'TXN_SUCCESS') {
       const whatsapp = new WhatsAppService();
 
-      await whatsapp.sendTextMessage(
-        booking.guest_phone,
-        `Payment successful ✅\n\nWe are processing your booking.\nYou will receive your e-ticket after owner confirmation.`
-      );
-
       const checkinDate = new Date(booking.checkin_datetime).toLocaleString('en-IN', {
         dateStyle: 'medium',
         timeStyle: 'short',
@@ -208,27 +204,82 @@ const paytmCallback = async (req, res) => {
       });
 
       const dueAmount = (booking.total_amount || 0) - booking.advance_amount;
+      const persons = booking.persons || ((booking.veg_guest_count || 0) + (booking.nonveg_guest_count || 0));
 
-      const ownerMessage = `🔔 New Booking Request\n\nProperty: ${booking.property_name}\nGuest: ${booking.guest_name}\nCheck-in: ${checkinDate}\nCheck-out: ${checkoutDate}\nPersons: ${booking.persons || 0}\nAdvance Paid: ₹${booking.advance_amount}\nDue Amount: ₹${dueAmount}\n\nPlease confirm or cancel:`;
+      let customerMessage = `✅ *Payment Successful*\n\n`;
+      customerMessage += `Booking ID: ${booking.booking_id}\n`;
+      customerMessage += `Property: ${booking.property_name}\n`;
+      customerMessage += `Check-in: ${checkinDate}\n`;
+      customerMessage += `Check-out: ${checkoutDate}\n`;
+      customerMessage += `Persons: ${persons}\n`;
+      customerMessage += `Advance Paid: ₹${booking.advance_amount}\n\n`;
+
+      if (booking.referral_code && booking.customer_discount > 0) {
+        customerMessage += `💰 Referral Discount Applied: ₹${booking.customer_discount}\n`;
+        customerMessage += `Referral Code: ${booking.referral_code}\n\n`;
+      }
+
+      customerMessage += `⏳ Your booking request has been received.\n`;
+      customerMessage += `It is being verified with the owner.\n`;
+      customerMessage += `Your e-ticket will be shared within 1 hour.`;
+
+      await whatsapp.sendTextMessage(booking.guest_phone, customerMessage);
+
+      let adminMessage = `📋 *New Booking Alert*\n\n`;
+      adminMessage += `Booking ID: ${booking.booking_id}\n`;
+      adminMessage += `Property: ${booking.property_name}\n`;
+      adminMessage += `Guest: ${booking.guest_name}\n`;
+      adminMessage += `Phone: ${booking.guest_phone}\n`;
+      adminMessage += `Owner: ${booking.owner_phone}\n`;
+      adminMessage += `Check-in: ${checkinDate}\n`;
+      adminMessage += `Check-out: ${checkoutDate}\n`;
+      adminMessage += `Persons: ${persons}\n`;
+      adminMessage += `Advance Paid: ₹${booking.advance_amount}\n`;
+      adminMessage += `Due Amount: ₹${dueAmount}\n\n`;
+
+      if (booking.referral_code) {
+        adminMessage += `🎁 *Referral Applied*\n`;
+        adminMessage += `Code: ${booking.referral_code}\n`;
+        adminMessage += `Type: ${booking.referral_type}\n`;
+        adminMessage += `Admin Commission: ₹${booking.admin_commission}\n`;
+        adminMessage += `Referrer Commission: ₹${booking.referrer_commission}\n`;
+        adminMessage += `Customer Discount: ₹${booking.customer_discount}\n`;
+        adminMessage += `Commission Status: ${booking.commission_status}\n\n`;
+      }
+
+      adminMessage += `Status: ⏳ Waiting for owner confirmation`;
+
+      await whatsapp.sendTextMessage(booking.admin_phone, adminMessage);
+
+      const confirmToken = createOwnerActionToken(booking.booking_id, 'CONFIRM', booking.owner_phone);
+      const cancelToken = createOwnerActionToken(booking.booking_id, 'CANCEL', booking.owner_phone);
+
+      let ownerMessage = `🔔 *New Booking Request*\n\n`;
+      ownerMessage += `Booking ID: ${booking.booking_id}\n`;
+      ownerMessage += `Property: ${booking.property_name}\n`;
+      ownerMessage += `Guest: ${booking.guest_name}\n`;
+      ownerMessage += `Phone: ${booking.guest_phone}\n`;
+      ownerMessage += `Check-in: ${checkinDate}\n`;
+      ownerMessage += `Check-out: ${checkoutDate}\n`;
+      ownerMessage += `Persons: ${persons}\n\n`;
+      ownerMessage += `💰 *Payment Details*\n`;
+      ownerMessage += `Advance Paid: ₹${booking.advance_amount}\n`;
+      ownerMessage += `Due Amount: ₹${dueAmount}\n\n`;
+      ownerMessage += `⚡ Please confirm or cancel this booking:`;
 
       await whatsapp.sendInteractiveButtons(
         booking.owner_phone,
         ownerMessage,
         [
           {
-            id: JSON.stringify({ bookingId: booking.booking_id, action: 'CONFIRM' }),
+            id: confirmToken,
             title: '✅ Confirm',
           },
           {
-            id: JSON.stringify({ bookingId: booking.booking_id, action: 'CANCEL' }),
+            id: cancelToken,
             title: '❌ Cancel',
           },
         ]
-      );
-
-      await whatsapp.sendTextMessage(
-        booking.admin_phone,
-        `📋 New Booking Alert\n\nProperty: ${booking.property_name}\nOwner: ${booking.owner_phone}\nGuest: ${booking.guest_name} (${booking.guest_phone})\nAdvance: ₹${booking.advance_amount}\nDue: ₹${dueAmount}\nStatus: Waiting for owner confirmation`
       );
 
       await query(

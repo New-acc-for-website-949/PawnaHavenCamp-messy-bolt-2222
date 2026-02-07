@@ -12,6 +12,7 @@ const eticketRoutes = require('./routes/etickets');
 const bookingRoutes = require('./routes/bookings');
 const paymentRoutes = require('./routes/payments');
 const referralRoutes = require('./routes/referralRoutes');
+const whatsappWebhookRoutes = require('./routes/whatsappWebhook');
 const { pool } = require('./db');
 const { errorMiddleware } = require('./middleware/errorHandler');
 
@@ -69,6 +70,7 @@ app.use('/api/bookings', bookingRoutes);
 app.use('/api/payments', paymentRoutes);
 app.use('/api/etickets', eticketRoutes);
 app.use('/api/referrals', referralRoutes);
+app.use('/api/whatsapp', whatsappWebhookRoutes);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
